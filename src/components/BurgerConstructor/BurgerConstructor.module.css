@@ -1,0 +1,31 @@
+.container{
+    flex: 1;
+    gap: 40px;
+    display: flex;
+    flex-direction: column;
+}
+.burger_constructor{
+    gap: 16px;
+    display: flex; 
+    overflow: auto;
+    height: calc(100%);
+    flex-direction: column; 
+
+    scrollbar-color: #8585AD #2F2F37;
+    scrollbar-width: thin;
+}
+.burger_constructor_item {
+    gap: 8px;
+    display: flex;
+    align-items: center;
+}
+.place_an_order{
+    gap: 40px;
+    display: flex;
+    justify-content: flex-end;
+}
+.price{
+    gap: 8px;
+    display: flex;
+    align-items: center;
+}

@@ -1,0 +1,6 @@
+.header_button{
+    gap: 8px;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+}
