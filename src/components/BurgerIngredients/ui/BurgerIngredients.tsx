@@ -1,9 +1,15 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
-import { EIngredientType } from "../../../entities/ingredient";
+import { EIngredientType, IIngredient } from "../../../entities/ingredient";
 import { BurgerIngredientsContent } from "../../BurgerIngredientsContent";
+import { separeteVariable } from "..";
 
-export function BurgerIngredients() {
+type Props = {
+    ingredients: IIngredient[];
+};
+
+export function BurgerIngredients(props: Props) {
+    const { bun, main, sauce } = separeteVariable(props.ingredients);
     return (
         <div className={`${styles.container}`}>
             <h1 className={`text text_type_main-large`}>Соберите бургер</h1>
@@ -19,9 +25,9 @@ export function BurgerIngredients() {
                 </Tab>
             </div>
             <div className={`${styles.ingredients}`}>
-                <BurgerIngredientsContent type={EIngredientType.bun} />
-                <BurgerIngredientsContent type={EIngredientType.sauce} />
-                <BurgerIngredientsContent type={EIngredientType.main} />
+                <BurgerIngredientsContent ingredient={bun} type={EIngredientType.bun} />
+                <BurgerIngredientsContent ingredient={sauce} type={EIngredientType.sauce} />
+                <BurgerIngredientsContent ingredient={main} type={EIngredientType.main} />
             </div>
         </div>
     );
