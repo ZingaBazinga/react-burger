@@ -2,5 +2,6 @@
     gap: 8px;
     display: flex;
     cursor: pointer;
+    padding: 16px 20px;
     align-items: center;
 }

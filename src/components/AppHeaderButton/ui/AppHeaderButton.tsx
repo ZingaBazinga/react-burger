@@ -1,13 +1,10 @@
 import React from "react";
 import { BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import headerStyles from './AppHeaderButton.module.css'
-import { ESelectedTab } from "./AppHeader";
+import { AppHeaderButtonProps } from "../model/types";
+import { ESelectedTab } from "../../AppHeader";
 
-interface AppHeaderButtonProps {
-  type: ESelectedTab,
-  isActive: boolean,
-  setIsActive: (newSelect: ESelectedTab) => void
-}
+
 
 class AppHeaderButton extends React.Component<AppHeaderButtonProps> {
   render() {
@@ -24,7 +21,7 @@ class AppHeaderButton extends React.Component<AppHeaderButtonProps> {
         }
       }
     }
-    const Text = () => {
+    const chooseText = () => {
       switch(this.props.type){
         case ESelectedTab.constructor: {
           return "Конструктор"
@@ -38,10 +35,10 @@ class AppHeaderButton extends React.Component<AppHeaderButtonProps> {
       }
     }
     return (
-      <div className={`pl-5 pt-4 pr-5 pb-4 ${headerStyles.header_button}`} onClick={() => {this.props.setIsActive(this.props.type)}}>
+      <nav className={`${headerStyles.header_button}`} onClick={() => {this.props.setIsActive(this.props.type)}}>
         <Icon/>
-        <span className={`text text_type_main-default ${!this.props.isActive && "text_color_inactive"}`}>{Text()}</span>
-      </div>
+        <span className={`text text_type_main-default ${!this.props.isActive && "text_color_inactive"}`}>{chooseText()}</span>
+      </nav>
     );
   }
 }

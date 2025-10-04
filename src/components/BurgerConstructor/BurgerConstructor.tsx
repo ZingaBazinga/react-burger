@@ -2,36 +2,31 @@ import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktiku
 import React from "react";
 import { data } from "../../utils/data";
 import styles from './BurgerConstructor.module.css'
+import { IIngredient } from "../../entities/ingredient";
 
-export interface IIngredient {
-    _id: string;
-    name: string;
-    type: string;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-    calories: number;
-    price: number;
-    image: string;
-    image_mobile: string;
-    image_large: string;
-    __v: number;
-}
+
 
 class BurgerConstructor extends React.Component {
   render() {
     return (
-        <div className={`pl-2 pr-2 mb-15 mt-25 ${styles.container}`}>
+        <div className={`${styles.container}`}>
+            <div className={`${styles.burger_constructor_item}`}>
+                <div className={`${styles.burger_constructor_item_bun}`}/>
+                <ConstructorElement
+                    type={"top"}
+                    isLocked={true}
+                    text={data[0].name  + ' (верх)'}
+                    price={data[0].price}
+                    thumbnail={data[0].image_mobile}
+                    key={data[0]._id}
+                />
+            </div>
             <div className={`${styles.burger_constructor}`}>
-                {data.map((ingredient: IIngredient) => (
-                    <div className={`${styles.burger_constructor_item}`}>
-                        { ingredient._id === "60666c42cc7b410027a1a9b1" || ingredient._id === "60666c42cc7b410027a1a9b2" ? 
-                            <div style={{width: '24px'}}/> : 
-                            <DragIcon type="primary" />
-                        }
+                {data.slice(1, -1).map((ingredient: IIngredient) => (
+                    <div key={ingredient._id} className={`${styles.burger_constructor_item}`}>
+                        <DragIcon type="primary" />
                         <ConstructorElement
-                            type={ingredient._id === "60666c42cc7b410027a1a9b1" ? "top": ingredient._id === "60666c42cc7b410027a1a9b2" ? 'bottom' : undefined}
-                            isLocked={ingredient._id === "60666c42cc7b410027a1a9b1" ? true: ingredient._id === "60666c42cc7b410027a1a9b2" ? true : false}
+                            isLocked={false}
                             text={ingredient.name}
                             price={ingredient.price}
                             thumbnail={ingredient.image_mobile}
@@ -39,6 +34,17 @@ class BurgerConstructor extends React.Component {
                         />
                     </div>
                 ))}
+            </div>
+            <div className={`${styles.burger_constructor_item}`}>
+                <div className={`${styles.burger_constructor_item_bun}`}/>
+                <ConstructorElement
+                    type={"bottom"}
+                    isLocked={true}
+                    text={data[0].name + ' (низ)'}
+                    price={data[0].price}
+                    thumbnail={data[0].image_mobile}
+                    key={data[0]._id}
+                />
             </div>
             <div className={`${styles.place_an_order}`}>
                 <div className={`${styles.price}`}>

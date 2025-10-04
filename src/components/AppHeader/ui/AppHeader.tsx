@@ -1,15 +1,12 @@
 import React from "react";
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
 import headerStyles from './AppHeader.module.css'
-import AppHeaderButton from "./AppHeaderButton";
+import { ESelectedTab } from "..";
+import AppHeaderButton from "../../AppHeaderButton/ui/AppHeaderButton";
 
-export enum ESelectedTab {
-  constructor,
-  orderFeed,
-  personalAccount
-}
 
-class AppHeader extends React.Component {
+
+export default class AppHeader extends React.Component {
   state = {
     selected: ESelectedTab.constructor
   }
@@ -20,7 +17,7 @@ class AppHeader extends React.Component {
 
   render() {
     return (
-      <header className={`pt-4 pb-4 ${headerStyles.header}`}>
+      <header className={`${headerStyles.header}`}>
         <div className={headerStyles.header_content}>
           <div className={headerStyles.header_left}>
             <AppHeaderButton type={ESelectedTab.constructor} isActive={this.state.selected === ESelectedTab.constructor} setIsActive={this.selectTab}/>
@@ -33,5 +30,3 @@ class AppHeader extends React.Component {
     );
   }
 }
-
-export default AppHeader;

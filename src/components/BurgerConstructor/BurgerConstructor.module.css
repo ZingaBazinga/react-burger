@@ -1,6 +1,8 @@
 .container{
     flex: 1;
-    gap: 40px;
+    gap: 16px;
+    padding: 0 8px;
+    margin: 100px 0 60px;
     display: flex;
     flex-direction: column;
 }
@@ -18,6 +20,9 @@
     gap: 8px;
     display: flex;
     align-items: center;
+}
+.burger_constructor_item_bun {
+    width: 24px;
 }
 .place_an_order{
     gap: 40px;

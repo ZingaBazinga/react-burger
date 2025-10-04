@@ -1,7 +1,7 @@
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
-import { IIngredient } from "./BurgerIngredients";
 import styles from './BurgerIngredientCard.module.css'
+import { IIngredient } from "../../entities/ingredient";
 
 class BurgerIngredientCard extends React.Component<IIngredient> {
   render() {
