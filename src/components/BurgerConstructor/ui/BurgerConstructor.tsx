@@ -1,9 +1,12 @@
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { data } from "../../../utils/data";
 import styles from "./BurgerConstructor.module.css";
 import { IIngredient } from "../../../entities/ingredient";
 
-export function BurgerConstructor() {
+interface Props {
+    ingredients: IIngredient[];
+}
+
+export function BurgerConstructor(props: Props) {
     return (
         <div className={`${styles.container}`}>
             <div className={`${styles.burger_constructor_item}`}>
@@ -11,14 +14,14 @@ export function BurgerConstructor() {
                 <ConstructorElement
                     type={"top"}
                     isLocked={true}
-                    text={data[0].name + " (верх)"}
-                    price={data[0].price}
-                    thumbnail={data[0].image_mobile}
-                    key={data[0]._id}
+                    text={props.ingredients[0].name + " (верх)"}
+                    price={props.ingredients[0].price}
+                    thumbnail={props.ingredients[0].image_mobile}
+                    key={props.ingredients[0]._id}
                 />
             </div>
             <div className={`${styles.burger_constructor}`}>
-                {data.slice(1, -1).map((ingredient: IIngredient) => (
+                {props.ingredients.slice(1, -1).map((ingredient: IIngredient) => (
                     <div key={ingredient._id} className={`${styles.burger_constructor_item}`}>
                         <DragIcon type="primary" />
                         <ConstructorElement
@@ -36,10 +39,10 @@ export function BurgerConstructor() {
                 <ConstructorElement
                     type={"bottom"}
                     isLocked={true}
-                    text={data[0].name + " (низ)"}
-                    price={data[0].price}
-                    thumbnail={data[0].image_mobile}
-                    key={data[0]._id}
+                    text={props.ingredients[0].name + " (низ)"}
+                    price={props.ingredients[0].price}
+                    thumbnail={props.ingredients[0].image_mobile}
+                    key={props.ingredients[0]._id}
                 />
             </div>
             <div className={`${styles.place_an_order}`}>

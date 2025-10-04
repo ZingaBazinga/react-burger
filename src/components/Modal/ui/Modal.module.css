@@ -1,0 +1,23 @@
+.modal {
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    display: flex;
+    min-width: 20%;
+    max-width: 80%;
+    min-height: 20%;
+    max-height: 80%;
+    position: fixed;
+    border-radius: 40px;
+    flex-direction: column;
+    padding: 40px 40px 60px;
+    background-color: #1c1c21;
+    transform: translate(-50%, -50%);
+}
+
+.header {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

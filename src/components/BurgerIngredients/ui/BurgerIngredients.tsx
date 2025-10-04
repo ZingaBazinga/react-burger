@@ -4,9 +4,9 @@ import { EIngredientType, IIngredient } from "../../../entities/ingredient";
 import { BurgerIngredientsContent } from "../../BurgerIngredientsContent";
 import { separeteVariable } from "..";
 
-type Props = {
+interface Props {
     ingredients: IIngredient[];
-};
+}
 
 export function BurgerIngredients(props: Props) {
     const { bun, main, sauce } = separeteVariable(props.ingredients);

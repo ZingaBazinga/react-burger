@@ -1,4 +1,4 @@
-import { EIngredientType, IIngredient } from "../../../entities/ingredient";
+import { IIngredient } from "../../../entities/ingredient";
 
 export function separeteVariable(ingredients: IIngredient[]) {
     const bun = ingredients.filter((ingredient) => ingredient.type === "bun");

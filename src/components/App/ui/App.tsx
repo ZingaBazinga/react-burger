@@ -10,7 +10,7 @@ export function App() {
 
     useEffect(() => {
         fetch();
-    }, []);
+    });
 
     if (loading) {
         return <div>loading</div>;
@@ -24,7 +24,7 @@ export function App() {
             <AppHeader />
             <main>
                 <BurgerIngredients ingredients={res} />
-                <BurgerConstructor />
+                <BurgerConstructor ingredients={res} />
             </main>
         </div>
     );
