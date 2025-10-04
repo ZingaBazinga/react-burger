@@ -27,6 +27,7 @@
 .place_an_order{
     gap: 40px;
     display: flex;
+    margin-top: 24px;
     justify-content: flex-end;
 }
 .price{
