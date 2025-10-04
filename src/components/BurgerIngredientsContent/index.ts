@@ -1,1 +1,1 @@
-export { BurgerIngredientsContent } from './BurgerIngredientsContent'
+export { BurgerIngredientsContent } from "./ui/BurgerIngredientsContent";

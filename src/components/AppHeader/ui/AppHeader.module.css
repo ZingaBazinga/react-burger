@@ -2,9 +2,9 @@
     display: flex;
     padding: 16px 0;
     justify-content: center;
-    background-color: #1C1C21;
+    background-color: #1c1c21;
 }
-.header_content{
+.header_content {
     width: 100%;
     display: flex;
     max-width: 1280px;

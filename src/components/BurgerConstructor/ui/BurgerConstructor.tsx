@@ -1,21 +1,17 @@
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import React from "react";
-import { data } from "../../utils/data";
-import styles from './BurgerConstructor.module.css'
-import { IIngredient } from "../../entities/ingredient";
+import { data } from "../../../utils/data";
+import styles from "./BurgerConstructor.module.css";
+import { IIngredient } from "../../../entities/ingredient";
 
-
-
-class BurgerConstructor extends React.Component {
-  render() {
+export function BurgerConstructor() {
     return (
         <div className={`${styles.container}`}>
             <div className={`${styles.burger_constructor_item}`}>
-                <div className={`${styles.burger_constructor_item_bun}`}/>
+                <div className={`${styles.burger_constructor_item_bun}`} />
                 <ConstructorElement
                     type={"top"}
                     isLocked={true}
-                    text={data[0].name  + ' (верх)'}
+                    text={data[0].name + " (верх)"}
                     price={data[0].price}
                     thumbnail={data[0].image_mobile}
                     key={data[0]._id}
@@ -36,11 +32,11 @@ class BurgerConstructor extends React.Component {
                 ))}
             </div>
             <div className={`${styles.burger_constructor_item}`}>
-                <div className={`${styles.burger_constructor_item_bun}`}/>
+                <div className={`${styles.burger_constructor_item_bun}`} />
                 <ConstructorElement
                     type={"bottom"}
                     isLocked={true}
-                    text={data[0].name + ' (низ)'}
+                    text={data[0].name + " (низ)"}
                     price={data[0].price}
                     thumbnail={data[0].image_mobile}
                     key={data[0]._id}
@@ -57,7 +53,4 @@ class BurgerConstructor extends React.Component {
             </div>
         </div>
     );
-  }
 }
-
-export default BurgerConstructor;
