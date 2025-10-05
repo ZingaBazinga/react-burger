@@ -1,6 +1,8 @@
 .card {
     gap: 8px;
     display: flex;
+    cursor: pointer;
+    overflow: hidden;
     text-align: center;
     flex-direction: column;
     justify-content: center;

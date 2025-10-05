@@ -19,5 +19,13 @@ export function ModalOverlay({ onClose }: Props) {
             document.removeEventListener("keydown", handleEscapeKey);
         };
     }, [onClose]);
-    return <div className={styles.modal_overlay} onClick={onClose} />;
+    return (
+        <div
+            className={styles.modal_overlay}
+            onClick={(e) => {
+                onClose();
+                e.stopPropagation();
+            }}
+        />
+    );
 }

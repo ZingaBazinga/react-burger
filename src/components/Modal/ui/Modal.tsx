@@ -18,13 +18,23 @@ export function Modal({ children, header, onClose }: ModalProps) {
     return ReactDOM.createPortal(
         <>
             <div className={styles.modal}>
-                <div className={styles.header}>
+                <div
+                    className={styles.header}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                    }}
+                >
                     <span className={`text text_type_main-large`}>{header}</span>
-                    <CloseIcon type="primary" onClick={onClose} />
+                    <CloseIcon
+                        type="primary"
+                        onClick={() => {
+                            onClose();
+                        }}
+                    />
                 </div>
                 {children}
             </div>
-            <ModalOverlay onClose={onClose} />
+            <ModalOverlay onClose={() => onClose()} />
         </>,
         modalRoot,
     );
