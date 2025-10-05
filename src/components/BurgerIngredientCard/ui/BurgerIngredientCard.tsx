@@ -3,7 +3,7 @@ import styles from "./BurgerIngredientCard.module.css";
 import { IIngredient } from "../../../entities/ingredient";
 import { useState } from "react";
 import { Modal } from "../../Modal";
-import { OrderDetails } from "../../OrderDetails";
+import { IngredientDetails } from "../../IngredientDetails";
 
 export function BurgerIngredientCard(props: IIngredient) {
     const [isModal, setIsModal] = useState<boolean>(false);
@@ -30,7 +30,7 @@ export function BurgerIngredientCard(props: IIngredient) {
                     }}
                     header="Детали ингредиента"
                 >
-                    <OrderDetails {...props} />
+                    <IngredientDetails {...props} />
                 </Modal>
             )}
         </div>

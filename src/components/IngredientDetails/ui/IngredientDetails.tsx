@@ -1,7 +1,7 @@
 import { IIngredient } from "../../../entities/ingredient";
-import styles from "./OrderDetails.module.css";
+import styles from "./IngredientDetails.module.css";
 
-export function OrderDetails(props: IIngredient) {
+export function IngredientDetails(props: IIngredient) {
     return (
         <div className={styles.container}>
             <img src={props.image_large} alt="" />
