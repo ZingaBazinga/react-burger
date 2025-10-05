@@ -10,7 +10,7 @@ export function App() {
 
     useEffect(() => {
         fetch();
-    });
+    }, []);
 
     if (loading) {
         return <div>loading</div>;

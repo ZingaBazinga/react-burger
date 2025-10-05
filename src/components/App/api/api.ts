@@ -13,7 +13,9 @@ export const GetIngredients = () => {
         hasFetched.current = true;
         setIsLoading(true);
         fetch(`${backendApi}/api/ingredients`)
-            .then((res) => res.json())
+            .then((res) => {
+                return res.json();
+            })
             .then((jsonData) => {
                 setData(jsonData.data);
             })
