@@ -1,0 +1,1 @@
+export { ESelectedTab } from './model/types'
