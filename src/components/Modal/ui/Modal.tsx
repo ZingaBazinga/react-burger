@@ -30,6 +30,7 @@ export function Modal({ children, header, onClose }: ModalProps) {
                         onClick={() => {
                             onClose();
                         }}
+                        className={styles.icon}
                     />
                 </div>
                 {children}

@@ -1,7 +1,7 @@
 import { BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import headerStyles from "./AppHeaderButton.module.css";
 import { AppHeaderButtonProps } from "../model/types";
-import { ESelectedTab } from "../../AppHeader";
+import { ESelectedTab } from "../../../types/SelectedTab";
 
 export function AppHeaderButton(props: AppHeaderButtonProps) {
     function HeaderIcon() {

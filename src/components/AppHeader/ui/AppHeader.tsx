@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
 import headerStyles from "./AppHeader.module.css";
-import { ESelectedTab } from "..";
 import { AppHeaderButton } from "../../AppHeaderButton";
+import { ESelectedTab } from "../../../types/SelectedTab";
 
 export function AppHeader() {
     const [select, setSelect] = useState<ESelectedTab>(ESelectedTab.constructor);

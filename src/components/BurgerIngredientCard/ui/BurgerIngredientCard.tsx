@@ -3,6 +3,7 @@ import styles from "./BurgerIngredientCard.module.css";
 import { IIngredient } from "../../../entities/ingredient";
 import { useState } from "react";
 import { Modal } from "../../Modal";
+import { OrderDetails } from "../../OrderDetails";
 
 export function BurgerIngredientCard(props: IIngredient) {
     const [isModal, setIsModal] = useState<boolean>(false);
@@ -27,8 +28,9 @@ export function BurgerIngredientCard(props: IIngredient) {
                     onClose={() => {
                         setIsModal(false);
                     }}
+                    header="Детали ингредиента"
                 >
-                    fsadf
+                    <OrderDetails {...props} />
                 </Modal>
             )}
         </div>

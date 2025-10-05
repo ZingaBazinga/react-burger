@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container_name {
+    padding: 16px 0 32px;
+}
+
+.container_bottom {
+    gap: 20px;
+    display: flex;
+}
+
+.container_bottom_item {
+    gap: 8px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
