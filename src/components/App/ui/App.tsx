@@ -2,11 +2,11 @@ import { useEffect } from "react";
 import { AppHeader } from "../../AppHeader";
 import { BurgerConstructor } from "../../BurgerConstructor";
 import { BurgerIngredients } from "../../BurgerIngredients";
-import { GetIngredients } from "../api/api";
+import { useGetIngredients } from "../../../hooks/useGetIngredients";
 import styles from "./App.module.css";
 
 export function App() {
-    const { res, loading, fetch } = GetIngredients();
+    const { res, loading, fetch, error } = useGetIngredients();
 
     useEffect(() => {
         fetch();
@@ -18,6 +18,10 @@ export function App() {
 
     if (res === undefined) {
         return <div>no data</div>;
+    }
+
+    if (error) {
+        return <div>error</div>;
     }
     return (
         <div className={styles.App}>

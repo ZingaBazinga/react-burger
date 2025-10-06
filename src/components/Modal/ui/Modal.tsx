@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import styles from "./Modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ModalOverlay } from "../../ModalOverlay";
@@ -12,6 +12,21 @@ interface ModalProps {
 
 export function Modal({ children, header, onClose }: ModalProps) {
     const modalRoot = document.getElementById("react-modals");
+
+    useEffect(() => {
+        const handleEscapeKey = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                onClose();
+            }
+        };
+
+        document.addEventListener("keydown", handleEscapeKey);
+
+        return () => {
+            document.removeEventListener("keydown", handleEscapeKey);
+        };
+    }, [onClose]);
+
     if (!modalRoot) {
         return null;
     }

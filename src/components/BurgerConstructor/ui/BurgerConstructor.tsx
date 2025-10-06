@@ -12,21 +12,31 @@ interface Props {
 export function BurgerConstructor(props: Props) {
     const [isModal, setIsModal] = useState<boolean>(false);
 
+    const bunIbgredient = props.ingredients.find((ingredient) => ingredient.type === "bun");
+    const ingredients = props.ingredients.filter((ingredient) => ingredient.type !== "bun");
+
+    const burgerConstructor = {
+        bun: bunIbgredient,
+        ingredients: ingredients,
+    };
+
     return (
         <div className={`${styles.container}`}>
             <div className={`${styles.burger_constructor_item}`}>
                 <div className={`${styles.burger_constructor_item_bun}`} />
-                <ConstructorElement
-                    type={"top"}
-                    isLocked={true}
-                    text={props.ingredients[0].name + " (верх)"}
-                    price={props.ingredients[0].price}
-                    thumbnail={props.ingredients[0].image_mobile}
-                    key={props.ingredients[0]._id}
-                />
+                {burgerConstructor.bun && (
+                    <ConstructorElement
+                        type={"top"}
+                        isLocked={true}
+                        text={burgerConstructor.bun.name + " (верх)"}
+                        price={burgerConstructor.bun.price}
+                        thumbnail={burgerConstructor.bun.image_mobile}
+                        key={burgerConstructor.bun._id}
+                    />
+                )}
             </div>
             <div className={`${styles.burger_constructor}`}>
-                {props.ingredients.slice(1, -1).map((ingredient: IIngredient) => (
+                {burgerConstructor.ingredients.map((ingredient: IIngredient) => (
                     <div key={ingredient._id} className={`${styles.burger_constructor_item}`}>
                         <DragIcon type="primary" />
                         <ConstructorElement
@@ -41,14 +51,16 @@ export function BurgerConstructor(props: Props) {
             </div>
             <div className={`${styles.burger_constructor_item}`}>
                 <div className={`${styles.burger_constructor_item_bun}`} />
-                <ConstructorElement
-                    type={"bottom"}
-                    isLocked={true}
-                    text={props.ingredients[0].name + " (низ)"}
-                    price={props.ingredients[0].price}
-                    thumbnail={props.ingredients[0].image_mobile}
-                    key={props.ingredients[0]._id}
-                />
+                {burgerConstructor.bun && (
+                    <ConstructorElement
+                        type={"bottom"}
+                        isLocked={true}
+                        text={burgerConstructor.bun.name + " (низ)"}
+                        price={burgerConstructor.bun.price}
+                        thumbnail={burgerConstructor.bun.image_mobile}
+                        key={burgerConstructor.bun._id}
+                    />
+                )}
             </div>
             <div className={`${styles.place_an_order}`}>
                 <div className={`${styles.price}`}>
