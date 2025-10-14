@@ -4,16 +4,16 @@ import { IIngredient } from "../../../entities/ingredient";
 import { useState } from "react";
 import { Modal } from "../../Modal";
 import { OrderDetails } from "../../OrderDetails";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../services/store";
 
-interface Props {
-    ingredients: IIngredient[];
-}
-
-export function BurgerConstructor(props: Props) {
+export function BurgerConstructor() {
     const [isModal, setIsModal] = useState<boolean>(false);
 
-    const bunIbgredient = props.ingredients.find((ingredient) => ingredient.type === "bun");
-    const ingredients = props.ingredients.filter((ingredient) => ingredient.type !== "bun");
+    const { burgerIngredients } = useSelector((state: RootState) => state.burgerIngredients);
+
+    const bunIbgredient = burgerIngredients.find((ingredient) => ingredient.type === "bun");
+    const ingredients = burgerIngredients.filter((ingredient) => ingredient.type !== "bun");
 
     const burgerConstructor = {
         bun: bunIbgredient,
