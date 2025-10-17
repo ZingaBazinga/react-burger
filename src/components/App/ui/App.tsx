@@ -6,15 +6,15 @@ import styles from "./App.module.css";
 import { DndProvider } from "react-dnd";
 
 export function App() {
-    return (
-        <div className={styles.App}>
-            <AppHeader />
-            <main>
-                <DndProvider backend={HTML5Backend}>
-                    <BurgerIngredients />
-                    <BurgerConstructor />
-                </DndProvider>
-            </main>
-        </div>
-    );
+  return (
+    <div className={styles.App}>
+      <AppHeader />
+      <main>
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DndProvider>
+      </main>
+    </div>
+  );
 }

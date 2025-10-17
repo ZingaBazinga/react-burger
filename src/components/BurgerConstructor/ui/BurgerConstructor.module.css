@@ -1,37 +1,37 @@
 .container {
-    flex: 1;
-    gap: 16px;
-    display: flex;
-    overflow: hidden;
-    flex-direction: column;
-    padding: 100px 8px 60px;
+  flex: 1;
+  gap: 16px;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  padding: 100px 8px 60px;
 }
 .burger_constructor {
-    gap: 16px;
-    display: flex;
-    overflow: auto;
-    height: calc(100%);
-    flex-direction: column;
+  gap: 16px;
+  display: flex;
+  overflow: auto;
+  height: calc(100%);
+  flex-direction: column;
 
-    scrollbar-color: #8585ad #2f2f37;
-    scrollbar-width: thin;
+  scrollbar-color: #8585ad #2f2f37;
+  scrollbar-width: thin;
 }
 .burger_constructor_item {
-    gap: 8px;
-    display: flex;
-    align-items: center;
+  gap: 8px;
+  display: flex;
+  align-items: center;
 }
 .burger_constructor_item_bun {
-    width: 24px;
+  width: 24px;
 }
 .place_an_order {
-    gap: 40px;
-    display: flex;
-    margin-top: 24px;
-    justify-content: flex-end;
+  gap: 40px;
+  display: flex;
+  margin-top: 24px;
+  justify-content: flex-end;
 }
 .price {
-    gap: 8px;
-    display: flex;
-    align-items: center;
+  gap: 8px;
+  display: flex;
+  align-items: center;
 }

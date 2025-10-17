@@ -1,14 +1,6 @@
 .burger_constructor_item {
-    gap: 8px;
-    display: flex;
-    align-items: center;
-    transition: opacity 0.2s ease;
-}
-
-.hover {
-    opacity: 0.7;
-}
-
-.dragging {
-    opacity: 0.5;
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.2s ease;
 }
