@@ -1,32 +1,30 @@
-import React from "react";
+import { useState } from "react";
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
-import headerStyles from './AppHeader.module.css'
-import { ESelectedTab } from "..";
-import AppHeaderButton from "../../AppHeaderButton/ui/AppHeaderButton";
+import headerStyles from "./AppHeader.module.css";
+import { AppHeaderButton } from "../../AppHeaderButton";
+import { ESelectedTab } from "../../../types/SelectedTab";
 
+export function AppHeader() {
+    const [select, setSelect] = useState<ESelectedTab>(ESelectedTab.constructor);
 
-
-export default class AppHeader extends React.Component {
-  state = {
-    selected: ESelectedTab.constructor
-  }
-
-  selectTab = (newSelect: ESelectedTab) => {
-    this.setState({selected: newSelect})
-  }
-
-  render() {
     return (
-      <header className={`${headerStyles.header}`}>
-        <div className={headerStyles.header_content}>
-          <div className={headerStyles.header_left}>
-            <AppHeaderButton type={ESelectedTab.constructor} isActive={this.state.selected === ESelectedTab.constructor} setIsActive={this.selectTab}/>
-            <AppHeaderButton type={ESelectedTab.orderFeed} isActive={this.state.selected === ESelectedTab.orderFeed} setIsActive={this.selectTab}/>
-          </div>
-          <Logo />
-          <AppHeaderButton type={ESelectedTab.personalAccount} isActive={this.state.selected === ESelectedTab.personalAccount} setIsActive={this.selectTab}/>
-        </div>
-      </header>
+        <header className={`${headerStyles.header}`}>
+            <div className={headerStyles.header_content}>
+                <div className={headerStyles.header_left}>
+                    <AppHeaderButton
+                        type={ESelectedTab.constructor}
+                        isActive={select === ESelectedTab.constructor}
+                        setIsActive={setSelect}
+                    />
+                    <AppHeaderButton type={ESelectedTab.orderFeed} isActive={select === ESelectedTab.orderFeed} setIsActive={setSelect} />
+                </div>
+                <Logo />
+                <AppHeaderButton
+                    type={ESelectedTab.personalAccount}
+                    isActive={select === ESelectedTab.personalAccount}
+                    setIsActive={setSelect}
+                />
+            </div>
+        </header>
     );
-  }
 }

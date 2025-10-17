@@ -1,1 +1,2 @@
-export { BurgerIngredientsContent } from './BurgerIngredientsContent'
+export { BurgerIngredientsContent } from "./ui/BurgerIngredientsContent";
+export { chooseType } from "./model/chooseType";

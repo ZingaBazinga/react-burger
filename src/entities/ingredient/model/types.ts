@@ -16,5 +16,5 @@ export interface IIngredient {
 export enum EIngredientType {
     bun,
     sauce,
-    main
+    main,
 }

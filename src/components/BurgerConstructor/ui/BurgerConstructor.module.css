@@ -1,19 +1,19 @@
-.container{
+.container {
     flex: 1;
     gap: 16px;
-    padding: 0 8px;
-    margin: 100px 0 60px;
     display: flex;
+    overflow: hidden;
     flex-direction: column;
+    padding: 100px 8px 60px;
 }
-.burger_constructor{
+.burger_constructor {
     gap: 16px;
-    display: flex; 
+    display: flex;
     overflow: auto;
     height: calc(100%);
-    flex-direction: column; 
+    flex-direction: column;
 
-    scrollbar-color: #8585AD #2F2F37;
+    scrollbar-color: #8585ad #2f2f37;
     scrollbar-width: thin;
 }
 .burger_constructor_item {
@@ -24,13 +24,13 @@
 .burger_constructor_item_bun {
     width: 24px;
 }
-.place_an_order{
+.place_an_order {
     gap: 40px;
     display: flex;
     margin-top: 24px;
     justify-content: flex-end;
 }
-.price{
+.price {
     gap: 8px;
     display: flex;
     align-items: center;

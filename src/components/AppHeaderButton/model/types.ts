@@ -1,7 +1,7 @@
-import { ESelectedTab } from "../../AppHeader";
+import { ESelectedTab } from "../../../types/SelectedTab";
 
 export interface AppHeaderButtonProps {
-  type: ESelectedTab,
-  isActive: boolean,
-  setIsActive: (newSelect: ESelectedTab) => void
+    type: ESelectedTab;
+    isActive: boolean;
+    setIsActive: (newSelect: ESelectedTab) => void;
 }
