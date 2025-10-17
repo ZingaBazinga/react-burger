@@ -40,7 +40,7 @@ export function BurgerConstructor() {
             sum += ingredient.ingredient.price;
         });
         return sum;
-    }, [constructorItems]);
+    }, [burgerConstructor.bun, burgerConstructor.ingredients]);
 
     const [, drop] = useDrop({
         accept: "constructor",

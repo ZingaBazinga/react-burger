@@ -5,7 +5,7 @@ import { BurgerIngredientsContent } from "../../BurgerIngredientsContent";
 import { separeteVariable } from "..";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../services/store";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { getBurgerIngredients, switchBurgerIngredientsTab } from "../../../services/burgerIngredientsSlice";
 
 export function BurgerIngredients() {
@@ -27,7 +27,7 @@ export function BurgerIngredients() {
         }
     }, [dispatch]);
 
-    const handleScroll = () => {
+    const handleScroll = useCallback(() => {
         if (
             ingredientsContainerRef &&
             ingredientsContainerRef.current &&
@@ -48,14 +48,15 @@ export function BurgerIngredients() {
                 dispatch(switchBurgerIngredientsTab(EIngredientType.main));
             }
         }
-    };
+    }, [dispatch]);
 
     useEffect(() => {
-        ingredientsContainerRef.current?.addEventListener("scroll", handleScroll);
+        const currentRef = ingredientsContainerRef.current;
+        currentRef?.addEventListener("scroll", handleScroll);
         return function () {
-            ingredientsContainerRef.current?.removeEventListener("scroll", handleScroll);
+            currentRef?.removeEventListener("scroll", handleScroll);
         };
-    }, [burgerIngredients]);
+    }, [handleScroll]);
 
     if (burgerIngredientsRequest) {
         return (
