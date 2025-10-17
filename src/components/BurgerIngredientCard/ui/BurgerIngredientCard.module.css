@@ -1,22 +1,22 @@
 .card {
-  gap: 8px;
-  display: flex;
-  cursor: pointer;
-  overflow: hidden;
-  position: relative;
-  text-align: center;
-  flex-direction: column;
-  justify-content: center;
+    gap: 8px;
+    display: flex;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
 }
 .image {
-  width: 240px;
-  height: 120px;
-  display: flex;
-  margin: 0px auto;
+    width: 240px;
+    height: 120px;
+    display: flex;
+    margin: 0px auto;
 }
 .price {
-  gap: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    gap: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

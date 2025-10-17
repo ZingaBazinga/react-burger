@@ -1,5 +1,5 @@
 export enum ESelectedTab {
-  constructor,
-  orderFeed,
-  personalAccount,
+    constructor,
+    orderFeed,
+    personalAccount,
 }

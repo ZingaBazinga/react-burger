@@ -1,31 +1,31 @@
 .container {
-  flex: 1;
-  padding-top: 40px;
+    flex: 1;
+    padding-top: 40px;
 }
 .tab {
-  display: flex;
-  padding-top: 20px;
+    display: flex;
+    padding-top: 20px;
 }
 .ingredients {
-  gap: 40px;
-  display: flex;
-  overflow: auto;
-  margin: 40px 0;
-  flex-direction: column;
-  height: calc(100% - 59.9px - 56px - 40px - 40px);
+    gap: 40px;
+    display: flex;
+    overflow: auto;
+    margin: 40px 0;
+    flex-direction: column;
+    height: calc(100% - 59.9px - 56px - 40px - 40px);
 
-  scrollbar-color: #8585ad #2f2f37;
-  scrollbar-width: thin;
+    scrollbar-color: #8585ad #2f2f37;
+    scrollbar-width: thin;
 }
 
 .ingredients_container {
-  gap: 24px;
-  display: flex;
-  flex-direction: column;
+    gap: 24px;
+    display: flex;
+    flex-direction: column;
 }
 .cards {
-  gap: 24px;
-  display: grid;
-  row-gap: 32px;
-  grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    display: grid;
+    row-gap: 32px;
+    grid-template-columns: 1fr 1fr;
 }

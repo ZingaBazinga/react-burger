@@ -5,13 +5,13 @@ import ingredientDetailsReducer from "./ingredientDetailsSlice";
 import orederDetailsReducer from "./orderDetailsSlice";
 
 export const store = configureStore({
-  reducer: {
-    burgerConstructor: burgerConstructorReducer,
-    burgerIngredients: burgerIngredientsReducer,
-    ingredientDetails: ingredientDetailsReducer,
-    orderDetails: orederDetailsReducer,
-  },
-  devTools: process.env.NODE_ENV !== "production",
+    reducer: {
+        burgerConstructor: burgerConstructorReducer,
+        burgerIngredients: burgerIngredientsReducer,
+        ingredientDetails: ingredientDetailsReducer,
+        orderDetails: orederDetailsReducer,
+    },
+    devTools: process.env.NODE_ENV !== "production",
 });
 
 export type RootState = ReturnType<typeof store.getState>;

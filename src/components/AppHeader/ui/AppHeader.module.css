@@ -1,18 +1,18 @@
 .header {
-  display: flex;
-  padding: 16px 0;
-  justify-content: center;
-  background-color: #1c1c21;
+    display: flex;
+    padding: 16px 0;
+    justify-content: center;
+    background-color: #1c1c21;
 }
 .header_content {
-  width: 100%;
-  display: flex;
-  max-width: 1280px;
-  justify-content: space-between;
+    width: 100%;
+    display: flex;
+    max-width: 1280px;
+    justify-content: space-between;
 }
 .header_left {
-  gap: 8px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+    gap: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }

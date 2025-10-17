@@ -1,18 +1,18 @@
 .container {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 .number {
-  padding: 16px 0 32px;
-  text-shadow: 0px 4px 32px #3333ff80;
+    padding: 16px 0 32px;
+    text-shadow: 0px 4px 32px #3333ff80;
 }
 .icon {
-  display: flex;
-  height: 120px;
-  width: 120px;
-  padding: 60px 0;
+    display: flex;
+    height: 120px;
+    width: 120px;
+    padding: 60px 0;
 }
 .await {
-  padding-top: 8px;
+    padding-top: 8px;
 }

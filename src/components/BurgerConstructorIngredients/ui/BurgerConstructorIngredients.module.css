@@ -1,6 +1,6 @@
 .burger_constructor_item {
-  gap: 8px;
-  display: flex;
-  align-items: center;
-  transition: opacity 0.2s ease;
+    gap: 8px;
+    display: flex;
+    align-items: center;
+    transition: opacity 0.2s ease;
 }
