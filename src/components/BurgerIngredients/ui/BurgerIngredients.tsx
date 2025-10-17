@@ -58,15 +58,36 @@ export function BurgerIngredients() {
     }, [burgerIngredients]);
 
     if (burgerIngredientsRequest) {
-        return <div>Загрузка...</div>;
+        return (
+            <div className={`${styles.container}`}>
+                <h1 className={`text text_type_main-large`}>Соберите бургер</h1>
+                <div className={styles.empty}>
+                    <span className="text text_type_main-medium text_color_inactive">Загрузка...</span>
+                </div>
+            </div>
+        );
     }
 
     if (burgerIngredientsFailed) {
-        return <div>Ошибка загрузки данных</div>;
+        return (
+            <div className={`${styles.container}`}>
+                <h1 className={`text text_type_main-large`}>Соберите бургер</h1>
+                <div className={styles.empty}>
+                    <span className="text text_type_main-medium text_color_inactive">Ошибка загрузки данных</span>
+                </div>
+            </div>
+        );
     }
 
     if (!burgerIngredients || burgerIngredients.length === 0) {
-        return <div>Нет данных</div>;
+        return (
+            <div className={`${styles.container}`}>
+                <h1 className={`text text_type_main-large`}>Соберите бургер</h1>
+                <div className={styles.empty}>
+                    <span className="text text_type_main-medium text_color_inactive">Нет данных</span>
+                </div>
+            </div>
+        );
     }
 
     const { bun, main, sauce } = separeteVariable(burgerIngredients);

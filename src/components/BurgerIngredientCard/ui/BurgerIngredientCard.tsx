@@ -32,7 +32,7 @@ export function BurgerIngredientCard(props: IIngredient) {
             ref={combinedRef}
             key={props._id}
             className={styles.card}
-            onClick={(e) => {
+            onClick={() => {
                 dispatch(setIngredientDetails(props));
                 openModal();
             }}

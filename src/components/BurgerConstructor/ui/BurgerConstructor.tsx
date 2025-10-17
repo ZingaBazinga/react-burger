@@ -68,6 +68,11 @@ export function BurgerConstructor() {
 
     return (
         <div ref={combinedRef} className={`${styles.container}`}>
+            {!burgerConstructor.bun && burgerConstructor.ingredients.length === 0 && (
+                <div className={styles.empty}>
+                    <span className="text text_type_main-medium text_color_inactive">Пока пусто (перетащи ингредиент)</span>
+                </div>
+            )}
             <div className={`${styles.burger_constructor_item}`}>
                 <div className={`${styles.burger_constructor_item_bun}`} />
                 {burgerConstructor.bun && (

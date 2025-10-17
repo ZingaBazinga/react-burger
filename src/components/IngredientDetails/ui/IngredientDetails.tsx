@@ -6,7 +6,11 @@ export function IngredientDetails() {
     const { ingredientDetails } = useSelector((state: RootState) => state.ingredientDetails);
 
     if (!ingredientDetails) {
-        return null;
+        return (
+            <div className={styles.empty}>
+                <span className="text text_type_main-medium text_color_inactive">Что-то пошло не так</span>
+            </div>
+        );
     }
 
     return (

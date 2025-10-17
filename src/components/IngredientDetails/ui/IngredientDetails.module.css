@@ -4,6 +4,14 @@
     flex-direction: column;
 }
 
+.empty {
+    width: 640px;
+    height: 375px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .container_name {
     padding: 16px 0 32px;
 }

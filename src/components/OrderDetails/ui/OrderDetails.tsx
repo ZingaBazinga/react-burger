@@ -9,11 +9,19 @@ export function OrderDetails() {
     );
 
     if (orderDetailsNumberRequest) {
-        return <div>Загрузка...</div>;
+        return (
+            <div className={styles.empty}>
+                <span className="text text_type_main-medium text_color_inactive">Загрузка...</span>
+            </div>
+        );
     }
 
     if (orderDetailsNumberFailed) {
-        return <div>Ошибка</div>;
+        return (
+            <div className={styles.empty}>
+                <span className="text text_type_main-medium text_color_inactive">Ошибка</span>
+            </div>
+        );
     }
 
     return (

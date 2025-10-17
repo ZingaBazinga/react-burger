@@ -1,16 +1,23 @@
 .container {
     flex: 1;
     gap: 16px;
+    width: 600px;
     display: flex;
     overflow: hidden;
     flex-direction: column;
     padding: 100px 8px 60px;
 }
+.empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
 .burger_constructor {
     gap: 16px;
     display: flex;
     overflow: auto;
-    height: calc(100%);
+    /* height: calc(100%); */
     flex-direction: column;
 
     scrollbar-color: #8585ad #2f2f37;
@@ -27,7 +34,7 @@
 .place_an_order {
     gap: 40px;
     display: flex;
-    margin-top: 24px;
+    margin-top: auto;
     justify-content: flex-end;
 }
 .price {

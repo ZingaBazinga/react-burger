@@ -4,9 +4,10 @@
     right: 0;
     bottom: 0;
     display: flex;
-    overflow: hidden;
     position: fixed;
+    overflow: hidden;
     flex-direction: column;
+    background-color: #131316;
 }
 
 main {
@@ -15,5 +16,4 @@ main {
     margin: 0px auto;
     max-width: 1280px;
     height: calc(100% - 88px);
-    background-color: #131316;
 }

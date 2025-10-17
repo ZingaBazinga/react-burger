@@ -3,6 +3,13 @@
     align-items: center;
     flex-direction: column;
 }
+.empty {
+    width: 640px;
+    height: 494px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .number {
     padding: 16px 0 32px;
     text-shadow: 0px 4px 32px #3333ff80;
