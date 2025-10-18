@@ -1,11 +1,13 @@
+import { forwardRef } from "react";
 import { chooseType } from "..";
-import { EIngredientType, IIngredient } from "../../../entities/ingredient";
+import { IIngredient } from "../../../entities/ingredient";
 import { BurgerIngredientCard } from "../../BurgerIngredientCard";
 import styles from "./BurgerIngredientsContent.module.css";
+import { BurgerIngredientsContentProps } from "../model/types";
 
-export function BurgerIngredientsContent({ type, ingredient }: { type: EIngredientType; ingredient: IIngredient[] }) {
+export const BurgerIngredientsContent = forwardRef<HTMLDivElement, BurgerIngredientsContentProps>(({ type, ingredient }, ref) => {
     return (
-        <div className={`${styles.ingredients_container}`}>
+        <div className={`${styles.ingredients_container}`} ref={ref}>
             <h2 className={`text text_type_main-medium`}>{chooseType(type)}</h2>
             <div className={styles.cards}>
                 {ingredient.map((ingredient: IIngredient) => (
@@ -14,4 +16,4 @@ export function BurgerIngredientsContent({ type, ingredient }: { type: EIngredie
             </div>
         </div>
     );
-}
+});

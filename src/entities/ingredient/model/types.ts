@@ -13,6 +13,10 @@ export interface IIngredient {
     __v: number;
 }
 
+export interface IConstructorIngredient extends IIngredient {
+    uniqueId: string;
+}
+
 export enum EIngredientType {
     bun,
     sauce,

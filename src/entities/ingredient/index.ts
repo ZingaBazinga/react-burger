@@ -1,1 +1,1 @@
-export { type IIngredient, EIngredientType } from "./model/types";
+export { type IIngredient, type IConstructorIngredient, EIngredientType } from "./model/types";

@@ -1,27 +1,78 @@
-import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button, ConstructorElement, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerConstructor.module.css";
-import { IIngredient } from "../../../entities/ingredient";
-import { useState } from "react";
+import { IIngredient, IConstructorIngredient } from "../../../entities/ingredient";
+import { useRef, useMemo } from "react";
 import { Modal } from "../../Modal";
 import { OrderDetails } from "../../OrderDetails";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../services/store";
+import { useDrop } from "react-dnd";
+import { addBurgerConstructor, replaceBurgerConstructor } from "../../../services/burgerConstructorSlice";
+import { decrementBurgerIngredients, incrementBurgerIngredients } from "../../../services/burgerIngredientsSlice";
+import { useModal } from "../../../hooks/useModal";
+import { postOrder, resetOrderDetails } from "../../../services/orderDetailsSlice";
+import { BurgerConstructorIngredients } from "../../BurgerConstructorIngredients";
 
-interface Props {
-    ingredients: IIngredient[];
-}
+export function BurgerConstructor() {
+    const dispatch = useDispatch<AppDispatch>();
+    const { isModalOpen, openModal, closeModal } = useModal();
+    const dropRef = useRef<HTMLDivElement>(null);
 
-export function BurgerConstructor(props: Props) {
-    const [isModal, setIsModal] = useState<boolean>(false);
+    const { constructorItems } = useSelector((state: RootState) => state.burgerConstructor);
+    const { burgerIngredients } = useSelector((state: RootState) => state.burgerIngredients);
 
-    const bunIbgredient = props.ingredients.find((ingredient) => ingredient.type === "bun");
-    const ingredients = props.ingredients.filter((ingredient) => ingredient.type !== "bun");
+    const bunIbgredient = constructorItems.find((ingredient) => ingredient.type === "bun");
+    const ingredients = constructorItems
+        .map((ingredient, index) => ({ ingredient, index }))
+        .filter(({ ingredient }) => ingredient.type !== "bun");
 
     const burgerConstructor = {
         bun: bunIbgredient,
         ingredients: ingredients,
     };
 
+    const totalPrice = useMemo(() => {
+        let sum = 0;
+        if (burgerConstructor.bun) {
+            sum += burgerConstructor.bun.price * 2;
+        }
+        burgerConstructor.ingredients.forEach((ingredient) => {
+            sum += ingredient.ingredient.price;
+        });
+        return sum;
+    }, [burgerConstructor.bun, burgerConstructor.ingredients]);
+
+    const [, drop] = useDrop({
+        accept: "constructor",
+        drop: (item: IIngredient) => {
+            if (constructorItems.find((ingredient) => ingredient._id === item._id && item.type === "bun")) {
+                return;
+            } else if (
+                constructorItems.find((ingredient) => ingredient._id !== item._id && item.type === "bun" && ingredient.type === "bun")
+            ) {
+                const oldBun = burgerIngredients.find((item) => item.__v !== 0 && item.type === "bun");
+                dispatch(decrementBurgerIngredients(oldBun));
+                dispatch(replaceBurgerConstructor(item));
+                dispatch(incrementBurgerIngredients(item));
+            } else {
+                dispatch(addBurgerConstructor(item));
+                dispatch(incrementBurgerIngredients(item));
+            }
+        },
+    });
+
+    const combinedRef = (node: HTMLDivElement | null) => {
+        dropRef.current = node;
+        drop(node);
+    };
+
     return (
-        <div className={`${styles.container}`}>
+        <div ref={combinedRef} className={`${styles.container}`}>
+            {!burgerConstructor.bun && burgerConstructor.ingredients.length === 0 && (
+                <div className={styles.empty}>
+                    <span className="text text_type_main-medium text_color_inactive">Пока пусто (перетащи ингредиент)</span>
+                </div>
+            )}
             <div className={`${styles.burger_constructor_item}`}>
                 <div className={`${styles.burger_constructor_item_bun}`} />
                 {burgerConstructor.bun && (
@@ -36,17 +87,12 @@ export function BurgerConstructor(props: Props) {
                 )}
             </div>
             <div className={`${styles.burger_constructor}`}>
-                {burgerConstructor.ingredients.map((ingredient: IIngredient) => (
-                    <div key={ingredient._id} className={`${styles.burger_constructor_item}`}>
-                        <DragIcon type="primary" />
-                        <ConstructorElement
-                            isLocked={false}
-                            text={ingredient.name}
-                            price={ingredient.price}
-                            thumbnail={ingredient.image_mobile}
-                            key={ingredient._id}
-                        />
-                    </div>
+                {burgerConstructor.ingredients.map((ingredient: { ingredient: IConstructorIngredient; index: number }) => (
+                    <BurgerConstructorIngredients
+                        key={ingredient.ingredient.uniqueId}
+                        ingredient={ingredient}
+                        constructorItems={constructorItems}
+                    />
                 ))}
             </div>
             <div className={`${styles.burger_constructor_item}`}>
@@ -64,17 +110,31 @@ export function BurgerConstructor(props: Props) {
             </div>
             <div className={`${styles.place_an_order}`}>
                 <div className={`${styles.price}`}>
-                    <p className="text text_type_digits-medium">610</p>
+                    <p className="text text_type_digits-medium">{totalPrice}</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button htmlType="button" type="primary" size="large" extraClass={styles.button} onClick={() => setIsModal(true)}>
+                <Button
+                    disabled={totalPrice === 0 || burgerConstructor.bun === undefined || burgerConstructor.ingredients.length === 0}
+                    htmlType="button"
+                    type="primary"
+                    size="large"
+                    extraClass={styles.button}
+                    onClick={() => {
+                        const data = {
+                            ingredients: constructorItems.map((ingredient) => ingredient._id),
+                        };
+                        dispatch(postOrder(data));
+                        openModal();
+                    }}
+                >
                     Оформить заказ
                 </Button>
             </div>
-            {isModal && (
+            {isModalOpen && (
                 <Modal
                     onClose={() => {
-                        setIsModal(false);
+                        dispatch(resetOrderDetails());
+                        closeModal();
                     }}
                 >
                     <OrderDetails />

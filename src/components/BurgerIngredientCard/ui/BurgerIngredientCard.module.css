@@ -3,6 +3,7 @@
     display: flex;
     cursor: pointer;
     overflow: hidden;
+    position: relative;
     text-align: center;
     flex-direction: column;
     justify-content: center;

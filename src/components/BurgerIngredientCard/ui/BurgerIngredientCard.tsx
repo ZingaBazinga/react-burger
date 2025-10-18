@@ -4,15 +4,36 @@ import { IIngredient } from "../../../entities/ingredient";
 import { Modal } from "../../Modal";
 import { IngredientDetails } from "../../IngredientDetails";
 import { useModal } from "../../../hooks/useModal";
+import { useDrag } from "react-dnd";
+import { useRef } from "react";
+import { useDispatch } from "react-redux";
+import { resetIngredientDetails, setIngredientDetails } from "../../../services/ingredientDetailsSlice";
 
 export function BurgerIngredientCard(props: IIngredient) {
+    const dispatch = useDispatch();
+    const dragRef = useRef<HTMLDivElement>(null);
     const { isModalOpen, openModal, closeModal } = useModal();
+
+    const [, drag] = useDrag(() => ({
+        type: "constructor",
+        item: props,
+        collect: (monitor) => ({
+            isDrag: !!monitor.isDragging(),
+        }),
+    }));
+
+    const combinedRef = (node: HTMLDivElement | null) => {
+        dragRef.current = node;
+        drag(node);
+    };
 
     return (
         <div
+            ref={combinedRef}
             key={props._id}
             className={styles.card}
-            onClick={(e) => {
+            onClick={() => {
+                dispatch(setIngredientDetails(props));
                 openModal();
             }}
         >
@@ -26,11 +47,12 @@ export function BurgerIngredientCard(props: IIngredient) {
             {isModalOpen && (
                 <Modal
                     onClose={() => {
+                        dispatch(resetIngredientDetails());
                         closeModal();
                     }}
                     header="Детали ингредиента"
                 >
-                    <IngredientDetails {...props} />
+                    <IngredientDetails />
                 </Modal>
             )}
         </div>

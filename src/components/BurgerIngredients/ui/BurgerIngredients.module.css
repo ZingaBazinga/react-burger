@@ -1,6 +1,13 @@
 .container {
     flex: 1;
+    width: 600px;
     padding-top: 40px;
+}
+.empty {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .tab {
     display: flex;

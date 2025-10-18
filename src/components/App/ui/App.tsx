@@ -1,34 +1,19 @@
-import { useEffect } from "react";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import { AppHeader } from "../../AppHeader";
 import { BurgerConstructor } from "../../BurgerConstructor";
 import { BurgerIngredients } from "../../BurgerIngredients";
-import { useGetIngredients } from "../../../hooks/useGetIngredients";
 import styles from "./App.module.css";
+import { DndProvider } from "react-dnd";
 
 export function App() {
-    const { res, loading, fetch, error } = useGetIngredients();
-
-    useEffect(() => {
-        fetch();
-    }, []);
-
-    if (loading) {
-        return <div>loading</div>;
-    }
-
-    if (res === undefined) {
-        return <div>no data</div>;
-    }
-
-    if (error) {
-        return <div>error</div>;
-    }
     return (
         <div className={styles.App}>
             <AppHeader />
             <main>
-                <BurgerIngredients ingredients={res} />
-                <BurgerConstructor ingredients={res} />
+                <DndProvider backend={HTML5Backend}>
+                    <BurgerIngredients />
+                    <BurgerConstructor />
+                </DndProvider>
             </main>
         </div>
     );
