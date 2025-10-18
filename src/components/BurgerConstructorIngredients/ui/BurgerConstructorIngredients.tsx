@@ -1,15 +1,15 @@
 import { useRef } from "react";
 import { useDrag, useDrop, DropTargetMonitor } from "react-dnd";
 import { useDispatch } from "react-redux";
-import { IIngredient } from "../../../entities/ingredient";
+import { IConstructorIngredient } from "../../../entities/ingredient";
 import { deleteBurgerConstructor, moveBurgerConstructor } from "../../../services/burgerConstructorSlice";
 import { decrementBurgerIngredients } from "../../../services/burgerIngredientsSlice";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerConstructorIngredients.module.css";
 
 type BurgerConstructorIngredientsProps = {
-    ingredient: { ingredient: IIngredient; index: number };
-    constructorItems: IIngredient[];
+    ingredient: { ingredient: IConstructorIngredient; index: number };
+    constructorItems: IConstructorIngredient[];
 };
 
 export function BurgerConstructorIngredients({ ingredient, constructorItems }: BurgerConstructorIngredientsProps) {
@@ -20,8 +20,8 @@ export function BurgerConstructorIngredients({ ingredient, constructorItems }: B
         accept: "constructorItem",
         collect: (monitor) => ({ isHover: monitor.isOver() }),
         drop: (
-            item: { ingredient: IIngredient; index: number },
-            monitor: DropTargetMonitor<{ ingredient: IIngredient; index: number }, void>,
+            item: { ingredient: IConstructorIngredient; index: number },
+            monitor: DropTargetMonitor<{ ingredient: IConstructorIngredient; index: number }, void>,
         ) => {
             if (!ref.current) {
                 return;
@@ -65,7 +65,7 @@ export function BurgerConstructorIngredients({ ingredient, constructorItems }: B
     };
 
     return (
-        <div ref={combinedRef} key={`${ingredient.ingredient._id}-${ingredient.index}`} className={`${styles.burger_constructor_item}`}>
+        <div ref={combinedRef} key={ingredient.ingredient.uniqueId} className={`${styles.burger_constructor_item}`}>
             <DragIcon type="primary" />
             <ConstructorElement
                 isLocked={false}

@@ -1,18 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { IIngredient } from "../entities/ingredient";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IIngredient, IConstructorIngredient } from "../entities/ingredient";
+import { v4 as uuidv4 } from "uuid";
 
 const burgerConstructorSlice = createSlice({
     name: "burgerConstructor",
     initialState: {
-        constructorItems: [] as IIngredient[],
+        constructorItems: [] as IConstructorIngredient[],
     },
     reducers: {
-        addBurgerConstructor: (state, action) => {
-            state.constructorItems = [...state.constructorItems, action.payload];
+        addBurgerConstructor: {
+            reducer: (state, action: PayloadAction<IConstructorIngredient>) => {
+                state.constructorItems = [...state.constructorItems, action.payload];
+            },
+            prepare: (ingredient: IIngredient) => {
+                return { payload: { ...ingredient, uniqueId: uuidv4() } };
+            },
         },
-        replaceBurgerConstructor: (state, action) => {
-            const newConstructorItems = state.constructorItems.map((item) => (item.type === "bun" ? action.payload : item));
-            state.constructorItems = newConstructorItems;
+        replaceBurgerConstructor: {
+            reducer: (state, action: PayloadAction<IConstructorIngredient>) => {
+                const newConstructorItems = state.constructorItems.map((item: IConstructorIngredient) =>
+                    item.type === "bun" ? action.payload : item,
+                );
+                state.constructorItems = newConstructorItems;
+            },
+            prepare: (ingredient: IIngredient) => {
+                return { payload: { ...ingredient, uniqueId: uuidv4() } };
+            },
         },
         deleteBurgerConstructor: (state, action) => {
             state.constructorItems.splice(action.payload.index, 1);

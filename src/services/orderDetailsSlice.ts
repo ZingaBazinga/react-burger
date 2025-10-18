@@ -1,25 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { backendApi } from "../utils/backend_api";
+import { request } from "../utils/backend_api";
 
-export const postOrder = createAsyncThunk("/api/orders", async (order: { ingredients: string[] }, { rejectWithValue }) => {
+export const postOrder = createAsyncThunk("orders", async (order: { ingredients: string[] }, { rejectWithValue }) => {
     try {
-        const res = await fetch(`${backendApi}/api/orders`, {
+        const jsonData = await request("orders", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(order),
         });
-        if (res.ok) {
-            const jsonData = await res.json();
-            if (jsonData.success) {
-                return jsonData.order.number;
-            } else {
-                return rejectWithValue(`Ошибка ${jsonData.message}`);
-            }
-        } else {
-            return rejectWithValue(`Ошибка ${res.status}`);
-        }
+        return jsonData.order.number;
     } catch (error) {
         return rejectWithValue(error instanceof Error ? error.message : "Unknown error");
     }

@@ -1,6 +1,6 @@
 import { Button, ConstructorElement, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerConstructor.module.css";
-import { IIngredient } from "../../../entities/ingredient";
+import { IIngredient, IConstructorIngredient } from "../../../entities/ingredient";
 import { useRef, useMemo } from "react";
 import { Modal } from "../../Modal";
 import { OrderDetails } from "../../OrderDetails";
@@ -87,9 +87,9 @@ export function BurgerConstructor() {
                 )}
             </div>
             <div className={`${styles.burger_constructor}`}>
-                {burgerConstructor.ingredients.map((ingredient: { ingredient: IIngredient; index: number }) => (
+                {burgerConstructor.ingredients.map((ingredient: { ingredient: IConstructorIngredient; index: number }) => (
                     <BurgerConstructorIngredients
-                        key={`${ingredient.ingredient._id}-${ingredient.index}`}
+                        key={ingredient.ingredient.uniqueId}
                         ingredient={ingredient}
                         constructorItems={constructorItems}
                     />

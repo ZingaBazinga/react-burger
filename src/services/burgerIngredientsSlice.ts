@@ -1,16 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { EIngredientType, IIngredient } from "../entities/ingredient";
-import { backendApi } from "../utils/backend_api";
+import { request } from "../utils/backend_api";
 
-export const getBurgerIngredients = createAsyncThunk("/api/ingredients", async (_, { rejectWithValue }) => {
+export const getBurgerIngredients = createAsyncThunk("ingredients", async (_, { rejectWithValue }) => {
     try {
-        const res = await fetch(`${backendApi}/api/ingredients`);
-        if (res.ok) {
-            const jsonData = await res.json();
-            return jsonData.data;
-        } else {
-            return rejectWithValue(`Ошибка ${res.status}`);
-        }
+        const jsonData = await request("ingredients");
+        return jsonData.data;
     } catch (error) {
         return rejectWithValue(error instanceof Error ? error.message : "Unknown error");
     }
