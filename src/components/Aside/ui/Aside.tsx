@@ -1,36 +1,41 @@
 import styles from "./Aside.module.css";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../services/store";
+import { postAuthLogout } from "../../../services/authSlice";
 
 export function Aside() {
     const navigate = useNavigate();
     const location = useLocation();
+    const dispatch = useDispatch<AppDispatch>();
 
-    const handleLinkClick = (link: string) => {
-        navigate(link);
-    };
     return (
         <aside className={styles.aside}>
-            <Link
-                to="/profile"
-                className={`text text_type_main-medium ${location.pathname === "/profile" ? "" : "text_color_inactive"}`}
-                onClick={() => handleLinkClick("/profile")}
+            <div
+                className={`${styles.link} text text_type_main-medium ${location.pathname === "/profile" ? "" : "text_color_inactive"}`}
+                onClick={() => navigate("/profile")}
             >
                 Профиль
-            </Link>
-            <Link
-                to="/profile/orders"
-                className={`text text_type_main-medium ${location.pathname === "/profile/orders" ? "" : "text_color_inactive"}`}
-                onClick={() => handleLinkClick("/profile/orders")}
+            </div>
+            <div
+                className={`${styles.link} text text_type_main-medium ${location.pathname === "/profile/orders" ? "" : "text_color_inactive"}`}
+                onClick={() => navigate("/profile/orders")}
             >
                 История заказов
-            </Link>
-            <Link
-                to="/profile/logout"
-                className={`text text_type_main-medium ${location.pathname === "/profile/logout" ? "" : "text_color_inactive"}`}
-                onClick={() => handleLinkClick("/profile/logout")}
+            </div>
+            <div
+                className={`${styles.link} text text_type_main-medium ${location.pathname === "/profile/logout" ? "" : "text_color_inactive"}`}
+                onClick={async () => {
+                    try {
+                        await dispatch(postAuthLogout()).unwrap();
+                        navigate("/");
+                    } catch (error) {
+                        console.error("Ошибка выхода:", error);
+                    }
+                }}
             >
                 Выход
-            </Link>
+            </div>
             <span className="text text_type_main-default text_color_inactive mt-20">
                 В этом разделе вы можете изменить свои персональные данные
             </span>

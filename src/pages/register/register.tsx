@@ -16,8 +16,13 @@ export function Register() {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleSubmit = () => {
-        dispatch(postAuthRegister({ name, email, password }));
+    const handleSubmit = async () => {
+        try {
+            await dispatch(postAuthRegister({ name, email, password })).unwrap();
+            navigate("/");
+        } catch (error) {
+            console.error("Ошибка регистрации:", error);
+        }
     };
 
     useEffect(() => {

@@ -1,1 +1,1 @@
-export { type IProfile } from "./model/types";
+export { type IAuthRegisterResponse, type IProfileData, type IRefreshTokenResponse } from "./model/types";

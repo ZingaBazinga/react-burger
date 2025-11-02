@@ -1,15 +1,30 @@
 import styles from "./profile.module.css";
 import { Aside } from "../../components/Aside";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../services/store";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../services/store";
+import { getAuthUser } from "../../services/authSlice";
 
 export function Profile() {
-    // const profileData = useSelector((state: RootState) => state.auth.profileData);
-    const [email, setEmail] = useState("");
-    const [name, setName] = useState("");
+    const dispatch = useDispatch<AppDispatch>();
+    const profileData = useSelector((state: RootState) => state.auth.user);
+    const [email, setEmail] = useState(profileData?.email || "");
+    const [name, setName] = useState(profileData?.name || "");
     const [password, setPassword] = useState("");
+    const hasRequested = useRef(false);
+
+    useEffect(() => {
+        if (!hasRequested.current) {
+            hasRequested.current = true;
+            dispatch(getAuthUser());
+        }
+    }, [dispatch, hasRequested]);
+
+    useEffect(() => {
+        setEmail(profileData?.email || "");
+        setName(profileData?.name || "");
+    }, [profileData]);
 
     return (
         <div className={styles.profile}>
