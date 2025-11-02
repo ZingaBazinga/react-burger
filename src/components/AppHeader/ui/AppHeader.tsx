@@ -15,14 +15,21 @@ export function AppHeader() {
                         type={ESelectedTab.constructor}
                         isActive={select === ESelectedTab.constructor}
                         setIsActive={setSelect}
+                        navigate={"/"}
                     />
-                    <AppHeaderButton type={ESelectedTab.orderFeed} isActive={select === ESelectedTab.orderFeed} setIsActive={setSelect} />
+                    <AppHeaderButton
+                        type={ESelectedTab.orderFeed}
+                        isActive={select === ESelectedTab.orderFeed}
+                        setIsActive={setSelect}
+                        navigate={"/feed"}
+                    />
                 </div>
                 <Logo />
                 <AppHeaderButton
                     type={ESelectedTab.personalAccount}
                     isActive={select === ESelectedTab.personalAccount}
                     setIsActive={setSelect}
+                    navigate={"/profile"}
                 />
             </div>
         </header>

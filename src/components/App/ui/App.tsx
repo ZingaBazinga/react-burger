@@ -5,13 +5,15 @@ import { ForgotPassword, Ingredients, Login, Main, NotFound, Profile, Register, 
 
 export function App() {
     return (
-        <div className={styles.App}>
-            <AppHeader />
-            <main>
-                <Router>
+        <Router>
+            <div className={styles.App}>
+                <AppHeader />
+                <main>
                     <Routes>
                         <Route path="/forgot-password" element={<ForgotPassword />} />
                         <Route path="/" element={<Main />} />
+                        <Route path="/feed" element={<Main />} />
+                        <Route path="/profile" element={<Main />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/reset-password" element={<ResetPassword />} />
@@ -19,8 +21,8 @@ export function App() {
                         <Route path="/ingredients/:id" element={<Ingredients />} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
-                </Router>
-            </main>
-        </div>
+                </main>
+            </div>
+        </Router>
     );
 }

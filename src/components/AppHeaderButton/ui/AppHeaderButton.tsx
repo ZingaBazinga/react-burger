@@ -2,8 +2,10 @@ import { BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer
 import headerStyles from "./AppHeaderButton.module.css";
 import { AppHeaderButtonProps } from "../model/types";
 import { ESelectedTab } from "../../../types/SelectedTab";
+import { useNavigate } from "react-router-dom";
 
 export function AppHeaderButton(props: AppHeaderButtonProps) {
+    const navigate = useNavigate();
     function HeaderIcon() {
         switch (props.type) {
             case ESelectedTab.constructor: {
@@ -35,6 +37,7 @@ export function AppHeaderButton(props: AppHeaderButtonProps) {
             className={`${headerStyles.header_button}`}
             onClick={() => {
                 props.setIsActive(props.type);
+                navigate(props.navigate);
             }}
         >
             <HeaderIcon />

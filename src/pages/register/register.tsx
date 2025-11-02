@@ -1,15 +1,31 @@
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./register.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../services/store";
+import { postAuthRegister } from "../../services/profileSlice";
 
 export function Register() {
     const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
+    const authRegisterSuccess = useSelector((state: RootState) => state.profile.authRegisterSuccess);
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+
+    const handleSubmit = () => {
+        dispatch(postAuthRegister({ name, email, password }));
+    };
+
+    useEffect(() => {
+        if (authRegisterSuccess) {
+            navigate("/");
+        }
+    }, [authRegisterSuccess, navigate]);
+
     return (
         <div className={styles.container}>
             <h1 className="text text_type_main-medium">Регистрация</h1>
@@ -43,7 +59,7 @@ export function Register() {
                 onPointerLeaveCapture={() => {}}
             />
             <div className={styles.buttons}>
-                <Button htmlType="button" type="primary" size="medium">
+                <Button htmlType="button" type="primary" size="medium" onClick={() => handleSubmit()}>
                     Зарегистрироваться
                 </Button>
                 <p className={`text text_type_main-default text_color_inactive ${styles.description}`}>
