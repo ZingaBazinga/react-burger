@@ -1,5 +1,9 @@
 export interface IProfile {
-    name: string;
-    email: string;
-    password: string;
+    success: boolean;
+    user: {
+        email: string;
+        name: string;
+    };
+    accessToken: string;
+    refreshToken: string;
 }

@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { request } from "../utils/backend_api";
-import { IProfile } from "../entities/profile";
 
 export const postPasswordReset = createAsyncThunk("password-reset", async (email: string, { rejectWithValue }) => {
     try {
@@ -35,28 +34,9 @@ export const postPasswordResetReset = createAsyncThunk(
     },
 );
 
-export const postAuthRegister = createAsyncThunk(
-    "auth/register",
-    async ({ name, email, password }: { name: string; email: string; password: string }, { rejectWithValue }) => {
-        try {
-            const jsonData = await request("auth/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ name, email, password }),
-            });
-            return jsonData.success;
-        } catch (error) {
-            return rejectWithValue(error instanceof Error ? error.message : "Unknown error");
-        }
-    },
-);
-
 const profileSlice = createSlice({
     name: "profile",
     initialState: {
-        profileData: null as IProfile | null,
         passwordResetSuccess: false,
         passwordResetRequest: false,
         passwordResetFailed: false,
@@ -68,12 +48,6 @@ const profileSlice = createSlice({
         authRegisterFailed: false,
     },
     reducers: {
-        setProfileData: (state, action) => {
-            state.profileData = action.payload;
-        },
-        resetProfileData: (state) => {
-            state.profileData = null;
-        },
         resetPasswordReset: (state) => {
             state.passwordResetSuccess = false;
             state.passwordResetRequest = false;
@@ -116,19 +90,6 @@ const profileSlice = createSlice({
             .addCase(postPasswordResetReset.rejected, (state) => {
                 state.passwordResetRequest = false;
                 state.passwordResetFailed = true;
-            })
-
-            .addCase(postAuthRegister.pending, (state) => {
-                state.authRegisterRequest = true;
-                state.authRegisterFailed = false;
-            })
-            .addCase(postAuthRegister.fulfilled, (state, action) => {
-                state.authRegisterRequest = false;
-                state.authRegisterSuccess = action.payload;
-            })
-            .addCase(postAuthRegister.rejected, (state) => {
-                state.authRegisterRequest = false;
-                state.authRegisterFailed = true;
             });
     },
 });

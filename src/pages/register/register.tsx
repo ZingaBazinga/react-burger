@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../services/store";
-import { postAuthRegister } from "../../services/profileSlice";
+import { postAuthRegister } from "../../services/authSlice";
 
 export function Register() {
     const navigate = useNavigate();

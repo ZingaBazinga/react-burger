@@ -6,10 +6,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../services/store";
 
 export function Profile() {
-    const profileData = useSelector((state: RootState) => state.profile.profileData);
-    const [email, setEmail] = useState(profileData?.email || "");
-    const [name, setName] = useState(profileData?.name || "");
-    const [password, setPassword] = useState(profileData?.password || "");
+    // const profileData = useSelector((state: RootState) => state.auth.profileData);
+    const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
+    const [password, setPassword] = useState("");
 
     return (
         <div className={styles.profile}>
