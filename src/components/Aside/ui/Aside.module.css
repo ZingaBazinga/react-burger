@@ -1,0 +1,11 @@
+.aside {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+}
+a {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 64px;
+}

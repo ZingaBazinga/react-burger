@@ -13,7 +13,7 @@ export function App() {
                         <Route path="/forgot-password" element={<ForgotPassword />} />
                         <Route path="/" element={<Main />} />
                         <Route path="/feed" element={<Main />} />
-                        <Route path="/profile" element={<Main />} />
+                        <Route path="/profile" element={<Profile />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/reset-password" element={<ResetPassword />} />
