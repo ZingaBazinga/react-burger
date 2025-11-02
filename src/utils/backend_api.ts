@@ -1,4 +1,4 @@
-export const BASE_URL = "https://norma.nomoreparties.space/api/";
+export const BASE_URL = "http://norma.education-services.ru/api/";
 
 const checkResponse = (res: Response) => {
     if (res.ok) {
