@@ -1,3 +1,3 @@
 export function Ingredients() {
-    return <>ingredients</>
+    return <>ingredients</>;
 }

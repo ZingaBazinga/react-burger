@@ -1,3 +1,3 @@
 export function ResetPassword() {
-    return(<>reset-password</>)
+    return <>reset-password</>;
 }

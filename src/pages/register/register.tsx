@@ -1,3 +1,3 @@
 export function Register() {
-    return(<>register</>)
+    return <>register</>;
 }

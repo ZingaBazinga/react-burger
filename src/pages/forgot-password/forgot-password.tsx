@@ -1,3 +1,3 @@
 export function ForgotPassword() {
-    return(<>forgot-password</>)
+    return <>forgot-password</>;
 }

@@ -1,3 +1,3 @@
 export function NotFound() {
-    return (<>NotFound</>)
+    return <>NotFound</>;
 }
