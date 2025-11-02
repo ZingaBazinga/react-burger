@@ -1,8 +1,11 @@
 import { useState } from "react";
 import styles from "./reset-password.module.css";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useNavigate } from "react-router-dom";
 
 export function ResetPassword() {
+    const navigate = useNavigate();
+
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [code, setCode] = useState("");
@@ -35,7 +38,7 @@ export function ResetPassword() {
                 </Button>
                 <p className={`text text_type_main-default text_color_inactive ${styles.description}`}>
                     Вспомнили пароль?{" "}
-                    <Button htmlType="button" type="secondary" size="medium" extraClass={styles.link}>
+                    <Button htmlType="button" type="secondary" size="medium" extraClass={styles.link} onClick={() => navigate("/login")}>
                         Войти
                     </Button>
                 </p>

@@ -1,8 +1,11 @@
 import { useState } from "react";
 import styles from "./login.module.css";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useNavigate } from "react-router-dom";
 
 export function Login() {
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -35,13 +38,19 @@ export function Login() {
                 </Button>
                 <p className={`text text_type_main-default text_color_inactive ${styles.description}`}>
                     Вы — новый пользователь?{" "}
-                    <Button htmlType="button" type="secondary" size="medium" extraClass={styles.link}>
+                    <Button htmlType="button" type="secondary" size="medium" extraClass={styles.link} onClick={() => navigate("/register")}>
                         Зарегистрироваться
                     </Button>
                 </p>
                 <p className={"text text_type_main-default text_color_inactive"}>
                     Забыли пароль?{" "}
-                    <Button htmlType="button" type="secondary" size="medium" extraClass={styles.link}>
+                    <Button
+                        htmlType="button"
+                        type="secondary"
+                        size="medium"
+                        extraClass={styles.link}
+                        onClick={() => navigate("/forgot-password")}
+                    >
                         Восстановить пароль
                     </Button>
                 </p>

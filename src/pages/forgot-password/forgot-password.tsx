@@ -1,8 +1,11 @@
 import { useState } from "react";
 import styles from "./forgot-password.module.css";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useNavigate } from "react-router-dom";
 
 export function ForgotPassword() {
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState("");
     return (
         <div className={styles.container}>
@@ -22,7 +25,7 @@ export function ForgotPassword() {
                 </Button>
                 <p className={`text text_type_main-default text_color_inactive ${styles.description}`}>
                     Вспомнили пароль?{" "}
-                    <Button htmlType="button" type="secondary" size="medium" extraClass={styles.link}>
+                    <Button htmlType="button" type="secondary" size="medium" extraClass={styles.link} onClick={() => navigate("/login")}>
                         Войти
                     </Button>
                 </p>

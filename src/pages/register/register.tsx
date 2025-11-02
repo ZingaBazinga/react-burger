@@ -1,8 +1,11 @@
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./register.module.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function Register() {
+    const navigate = useNavigate();
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -45,7 +48,7 @@ export function Register() {
                 </Button>
                 <p className={`text text_type_main-default text_color_inactive ${styles.description}`}>
                     Уже зарегистрированы?{" "}
-                    <Button htmlType="button" type="secondary" size="medium" extraClass={styles.link}>
+                    <Button htmlType="button" type="secondary" size="medium" extraClass={styles.link} onClick={() => navigate("/login")}>
                         Войти
                     </Button>
                 </p>
