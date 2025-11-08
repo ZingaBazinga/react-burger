@@ -1,19 +1,19 @@
-import { useState } from "react";
 import styles from "./forgot-password.module.css";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/redux";
 import { postPasswordReset } from "../../services/profileSlice";
+import { useForm } from "../../hooks/useForm";
 
 export function ForgotPassword() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const [email, setEmail] = useState("");
+    const { values, handleChange } = useForm({ email: "" });
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            await dispatch(postPasswordReset(email)).unwrap();
+            await dispatch(postPasswordReset(values.email)).unwrap();
             localStorage.setItem("passwordResetAllowed", "true");
             navigate("/reset-password", { state: { fromForgotPassword: true } });
         } catch (error) {
@@ -27,8 +27,9 @@ export function ForgotPassword() {
             <Input
                 type="email"
                 placeholder="Укажите e-mail"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={values.email}
+                name="email"
+                onChange={handleChange}
                 size="default"
                 onPointerEnterCapture={() => {}}
                 onPointerLeaveCapture={() => {}}

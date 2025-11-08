@@ -4,6 +4,7 @@ import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-component
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/redux";
 import { postAuthLogin } from "../../services/authSlice";
+import { useForm } from "../../hooks/useForm";
 
 export function Login() {
     const navigate = useNavigate();
@@ -11,14 +12,13 @@ export function Login() {
 
     const dispatch = useAppDispatch();
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const { values, handleChange } = useForm({ email: "", password: "" });
     const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            await dispatch(postAuthLogin({ email, password })).unwrap();
+            await dispatch(postAuthLogin({ email: values.email, password: values.password })).unwrap();
             const from = (location.state as { from?: string })?.from || "/";
             navigate(from, { replace: true });
         } catch (error) {
@@ -32,8 +32,9 @@ export function Login() {
             <Input
                 type="text"
                 placeholder="E-mail"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={values.email}
+                name="email"
+                onChange={handleChange}
                 size="default"
                 onPointerEnterCapture={() => {}}
                 onPointerLeaveCapture={() => {}}
@@ -41,8 +42,9 @@ export function Login() {
             <Input
                 type={showPassword ? "text" : "password"}
                 placeholder="Пароль"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={values.password}
+                name="password"
+                onChange={handleChange}
                 size="default"
                 icon={showPassword ? "ShowIcon" : "HideIcon"}
                 onIconClick={() => setShowPassword(!showPassword)}

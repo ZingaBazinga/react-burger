@@ -4,15 +4,15 @@ import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-component
 import { useNavigate, useLocation } from "react-router-dom";
 import { postPasswordResetReset } from "../../services/profileSlice";
 import { useAppDispatch } from "../../hooks/redux";
+import { useForm } from "../../hooks/useForm";
 
 export function ResetPassword() {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useAppDispatch();
 
-    const [password, setPassword] = useState("");
+    const { values, handleChange } = useForm({ password: "", code: "" });
     const [showPassword, setShowPassword] = useState(false);
-    const [code, setCode] = useState("");
 
     useEffect(() => {
         const fromForgotPassword = (location.state as { fromForgotPassword?: boolean })?.fromForgotPassword;
@@ -26,7 +26,7 @@ export function ResetPassword() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            await dispatch(postPasswordResetReset({ password, token: code })).unwrap();
+            await dispatch(postPasswordResetReset({ password: values.password, token: values.code })).unwrap();
             localStorage.removeItem("passwordResetAllowed");
             navigate("/login");
         } catch (error) {
@@ -40,8 +40,9 @@ export function ResetPassword() {
             <Input
                 type={showPassword ? "text" : "password"}
                 placeholder="Введите новый пароль"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={values.password}
+                name="password"
+                onChange={handleChange}
                 size="default"
                 icon={showPassword ? "ShowIcon" : "HideIcon"}
                 onIconClick={() => setShowPassword(!showPassword)}
@@ -51,8 +52,9 @@ export function ResetPassword() {
             <Input
                 type="text"
                 placeholder="Введите код из письма"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
+                value={values.code}
+                name="code"
+                onChange={handleChange}
                 size="default"
                 onPointerEnterCapture={() => {}}
                 onPointerLeaveCapture={() => {}}

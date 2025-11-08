@@ -4,13 +4,12 @@ import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-component
 import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { getAuthUser, patchAuthUser } from "../../services/authSlice";
+import { useForm } from "../../hooks/useForm";
 
 export function Profile() {
     const dispatch = useAppDispatch();
     const profileData = useAppSelector((state) => state.auth.user);
-    const [email, setEmail] = useState(profileData?.email || "");
-    const [name, setName] = useState(profileData?.name || "");
-    const [password, setPassword] = useState("");
+    const { values, handleChange, setValues } = useForm({ email: profileData?.email || "", name: profileData?.name || "", password: "" });
     const hasRequested = useRef(false);
     const [isChanged, setIsChanged] = useState(false);
 
@@ -22,29 +21,25 @@ export function Profile() {
     }, [dispatch, hasRequested]);
 
     useEffect(() => {
-        setEmail(profileData?.email || "");
-        setName(profileData?.name || "");
-    }, [profileData]);
+        setValues({ email: profileData?.email || "", name: profileData?.name || "", password: "" });
+    }, [profileData, setValues]);
 
     useEffect(() => {
-        setIsChanged(email !== profileData?.email || name !== profileData?.name);
-    }, [email, name, profileData]);
+        setIsChanged(values.email !== profileData?.email || values.name !== profileData?.name);
+    }, [values.email, values.name, profileData]);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(patchAuthUser({ data: { email, name, password } }))
+        dispatch(patchAuthUser({ data: { email: values.email, name: values.name, password: values.password } }))
             .unwrap()
             .then((data) => {
-                setEmail(data.email);
-                setName(data.name);
+                setValues({ email: data.email, name: data.name, password: "" });
                 setIsChanged(false);
             });
     };
 
     const handleCancel = () => {
-        setEmail(profileData?.email || "");
-        setName(profileData?.name || "");
-        setPassword("");
+        setValues({ email: profileData?.email || "", name: profileData?.name || "", password: "" });
         setIsChanged(false);
     };
 
@@ -54,9 +49,9 @@ export function Profile() {
             <form className={styles.profile_main} onSubmit={handleSubmit} onReset={handleCancel}>
                 <Input
                     type="text"
-                    onChange={(e) => setName(e.target.value)}
-                    value={name}
-                    name={"name"}
+                    onChange={handleChange}
+                    value={values.name}
+                    name="name"
                     placeholder="Имя"
                     icon="EditIcon"
                     onIconClick={() => {}}
@@ -65,9 +60,9 @@ export function Profile() {
                 />
                 <Input
                     type="text"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                    name={"email"}
+                    onChange={handleChange}
+                    value={values.email}
+                    name="email"
                     placeholder="Логин"
                     icon="EditIcon"
                     onIconClick={() => {}}
@@ -76,9 +71,9 @@ export function Profile() {
                 />
                 <Input
                     type="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    value={password}
-                    name={"password"}
+                    onChange={handleChange}
+                    value={values.password}
+                    name="password"
                     placeholder="Пароль"
                     icon="EditIcon"
                     onIconClick={() => {}}

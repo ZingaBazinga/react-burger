@@ -4,20 +4,19 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/redux";
 import { postAuthRegister } from "../../services/authSlice";
+import { useForm } from "../../hooks/useForm";
 
 export function Register() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const { values, handleChange } = useForm({ name: "", email: "", password: "" });
     const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            await dispatch(postAuthRegister({ name, email, password })).unwrap();
+            await dispatch(postAuthRegister({ name: values.name, email: values.email, password: values.password })).unwrap();
             navigate("/");
         } catch (error) {
             console.error("Ошибка регистрации:", error);
@@ -30,8 +29,9 @@ export function Register() {
             <Input
                 type="text"
                 placeholder="Имя"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={values.name}
+                name="name"
+                onChange={handleChange}
                 size="default"
                 onPointerEnterCapture={() => {}}
                 onPointerLeaveCapture={() => {}}
@@ -39,8 +39,9 @@ export function Register() {
             <Input
                 type="text"
                 placeholder="E-mail"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={values.email}
+                name="email"
+                onChange={handleChange}
                 size="default"
                 onPointerEnterCapture={() => {}}
                 onPointerLeaveCapture={() => {}}
@@ -48,8 +49,9 @@ export function Register() {
             <Input
                 type={showPassword ? "text" : "password"}
                 placeholder="Пароль"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={values.password}
+                name="password"
+                onChange={handleChange}
                 size="default"
                 icon={showPassword ? "ShowIcon" : "HideIcon"}
                 onIconClick={() => setShowPassword(!showPassword)}
