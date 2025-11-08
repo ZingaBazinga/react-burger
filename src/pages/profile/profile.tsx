@@ -2,13 +2,12 @@ import styles from "./profile.module.css";
 import { Aside } from "../../components/Aside";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../services/store";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { getAuthUser, patchAuthUser } from "../../services/authSlice";
 
 export function Profile() {
-    const dispatch = useDispatch<AppDispatch>();
-    const profileData = useSelector((state: RootState) => state.auth.user);
+    const dispatch = useAppDispatch();
+    const profileData = useAppSelector((state) => state.auth.user);
     const [email, setEmail] = useState(profileData?.email || "");
     const [name, setName] = useState(profileData?.name || "");
     const [password, setPassword] = useState("");

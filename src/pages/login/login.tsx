@@ -2,15 +2,14 @@ import { useState } from "react";
 import styles from "./login.module.css";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../services/store";
+import { useAppDispatch } from "../../hooks/redux";
 import { postAuthLogin } from "../../services/authSlice";
 
 export function Login() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

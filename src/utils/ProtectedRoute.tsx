@@ -3,20 +3,19 @@ import { useAuth } from "../hooks/useAuth";
 import { Navigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getAuthUser } from "../services/authSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../services/store";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
 
 export function ProtectedRouteElement({ element, forAuth }: { element: React.ReactElement; forAuth?: boolean }): React.ReactElement | null {
     let { isAuth } = useAuth();
     const [isUserLoaded, setUserLoaded] = useState(false);
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const location = useLocation();
 
     // Получаем состояние пользователя из store
-    const user = useSelector((state: RootState) => state.auth.user);
-    const userRequest = useSelector((state: RootState) => state.auth.userRequest);
-    const userSuccess = useSelector((state: RootState) => state.auth.userSuccess);
-    const userFailed = useSelector((state: RootState) => state.auth.userFailed);
+    const user = useAppSelector((state) => state.auth.user);
+    const userRequest = useAppSelector((state) => state.auth.userRequest);
+    const userSuccess = useAppSelector((state) => state.auth.userSuccess);
+    const userFailed = useAppSelector((state) => state.auth.userFailed);
 
     // Отслеживаем завершение запроса пользователя
     useEffect(() => {

@@ -3,22 +3,21 @@ import styles from "./BurgerIngredients.module.css";
 import { EIngredientType } from "../../../entities/ingredient";
 import { BurgerIngredientsContent } from "../../BurgerIngredientsContent";
 import { separeteVariable } from "..";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../services/store";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { useEffect, useRef, useState } from "react";
 import { switchBurgerIngredientsTab } from "../../../services/burgerIngredientsSlice";
 import { useInView } from "react-intersection-observer";
 
 export function BurgerIngredients() {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const [rootElement, setRootElement] = useState<HTMLDivElement | null>(null);
     const ingredientsContainerRef = useRef<HTMLDivElement>(null);
     const bunRef = useRef<HTMLDivElement>(null);
     const souceRef = useRef<HTMLDivElement>(null);
     const mainRef = useRef<HTMLDivElement>(null);
 
-    const { burgerIngredients, burgerIngredientsRequest, burgerIngredientsFailed, burgerIngredientsTab } = useSelector(
-        (state: RootState) => state.burgerIngredients,
+    const { burgerIngredients, burgerIngredientsRequest, burgerIngredientsFailed, burgerIngredientsTab } = useAppSelector(
+        (state) => state.burgerIngredients,
     );
 
     const setIngredientsContainerRef = (node: HTMLDivElement | null) => {

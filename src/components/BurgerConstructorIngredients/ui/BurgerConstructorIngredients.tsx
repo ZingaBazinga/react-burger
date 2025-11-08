@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useDrag, useDrop, DropTargetMonitor } from "react-dnd";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../../hooks/redux";
 import { IConstructorIngredient } from "../../../entities/ingredient";
 import { deleteBurgerConstructor, moveBurgerConstructor } from "../../../services/burgerConstructorSlice";
 import { decrementBurgerIngredients } from "../../../services/burgerIngredientsSlice";
@@ -13,7 +13,7 @@ type BurgerConstructorIngredientsProps = {
 };
 
 export function BurgerConstructorIngredients({ ingredient, constructorItems }: BurgerConstructorIngredientsProps) {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const ref = useRef<HTMLDivElement>(null);
 
     const [, drop] = useDrop({

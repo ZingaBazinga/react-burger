@@ -1,13 +1,12 @@
 import styles from "./Aside.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../services/store";
+import { useAppDispatch } from "../../../hooks/redux";
 import { postAuthLogout } from "../../../services/authSlice";
 
 export function Aside() {
     const navigate = useNavigate();
     const location = useLocation();
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     return (
         <aside className={styles.aside}>

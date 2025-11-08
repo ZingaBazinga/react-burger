@@ -2,9 +2,8 @@ import { IngredientDetails } from "../../components/IngredientDetails";
 import styles from "./ingredients.module.css";
 import { useLocation, useParams } from "react-router-dom";
 import { Modal } from "../../components/Modal";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { resetIngredientDetails, setIngredientDetails } from "../../services/ingredientDetailsSlice";
-import { AppDispatch, RootState } from "../../services/store";
 import { useRef, useEffect } from "react";
 import { getBurgerIngredients } from "../../services/burgerIngredientsSlice";
 
@@ -12,9 +11,9 @@ export function Ingredient() {
     const location = useLocation();
     const background = location.state?.background;
     const hasRequested = useRef(false);
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const { id } = useParams<{ id: string }>();
-    const { burgerIngredients } = useSelector((state: RootState) => state.burgerIngredients);
+    const { burgerIngredients } = useAppSelector((state) => state.burgerIngredients);
     const ingredient = burgerIngredients.find((ingredient) => ingredient._id === id);
 
     const handleClose = () => {

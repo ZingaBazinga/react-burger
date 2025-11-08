@@ -2,13 +2,12 @@ import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-component
 import styles from "./register.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../services/store";
+import { useAppDispatch } from "../../hooks/redux";
 import { postAuthRegister } from "../../services/authSlice";
 
 export function Register() {
     const navigate = useNavigate();
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");

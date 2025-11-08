@@ -2,13 +2,12 @@ import { useState } from "react";
 import styles from "./forgot-password.module.css";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../hooks/redux";
 import { postPasswordReset } from "../../services/profileSlice";
-import { AppDispatch } from "../../services/store";
 
 export function ForgotPassword() {
     const navigate = useNavigate();
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const [email, setEmail] = useState("");
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

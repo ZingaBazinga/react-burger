@@ -3,13 +3,12 @@ import styles from "./reset-password.module.css";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import { postPasswordResetReset } from "../../services/profileSlice";
-import { AppDispatch } from "../../services/store";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../hooks/redux";
 
 export function ResetPassword() {
     const navigate = useNavigate();
     const location = useLocation();
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);

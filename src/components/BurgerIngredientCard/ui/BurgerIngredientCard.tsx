@@ -3,12 +3,12 @@ import styles from "./BurgerIngredientCard.module.css";
 import { IIngredient } from "../../../entities/ingredient";
 import { useDrag } from "react-dnd";
 import { useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../../hooks/redux";
 import { setIngredientDetails } from "../../../services/ingredientDetailsSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export function BurgerIngredientCard(props: IIngredient) {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const dragRef = useRef<HTMLDivElement>(null);
     const location = useLocation();

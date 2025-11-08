@@ -4,8 +4,7 @@ import { IIngredient, IConstructorIngredient } from "../../../entities/ingredien
 import { useRef, useMemo, useEffect } from "react";
 import { Modal } from "../../Modal";
 import { OrderDetails } from "../../OrderDetails";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../services/store";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { useDrop } from "react-dnd";
 import { addBurgerConstructor, replaceBurgerConstructor, clearBurgerConstructor } from "../../../services/burgerConstructorSlice";
 import {
@@ -20,17 +19,15 @@ import { useAuth } from "../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
 export function BurgerConstructor() {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { isModalOpen, openModal, closeModal } = useModal();
     const { isAuth } = useAuth();
     const dropRef = useRef<HTMLDivElement>(null);
 
-    const { constructorItems } = useSelector((state: RootState) => state.burgerConstructor);
-    const { burgerIngredients } = useSelector((state: RootState) => state.burgerIngredients);
-    const { orderDetailsNumber, orderDetailsNumberRequest, orderDetailsNumberFailed } = useSelector(
-        (state: RootState) => state.orderDetails,
-    );
+    const { constructorItems } = useAppSelector((state) => state.burgerConstructor);
+    const { burgerIngredients } = useAppSelector((state) => state.burgerIngredients);
+    const { orderDetailsNumber, orderDetailsNumberRequest } = useAppSelector((state) => state.orderDetails);
 
     const bunIbgredient = constructorItems.find((ingredient) => ingredient.type === "bun");
     const ingredients = constructorItems

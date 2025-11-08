@@ -2,13 +2,12 @@ import { DndProvider } from "react-dnd";
 import { BurgerIngredients } from "../../components/BurgerIngredients";
 import { BurgerConstructor } from "../../components/BurgerConstructor";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../services/store";
+import { useAppDispatch } from "../../hooks/redux";
 import { getBurgerIngredients } from "../../services/burgerIngredientsSlice";
 import { useRef, useEffect } from "react";
 
 export function Main() {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const hasRequested = useRef(false);
 
     useEffect(() => {
