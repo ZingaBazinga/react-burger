@@ -1,14 +1,18 @@
 import { Button, ConstructorElement, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerConstructor.module.css";
 import { IIngredient, IConstructorIngredient } from "../../../entities/ingredient";
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useEffect } from "react";
 import { Modal } from "../../Modal";
 import { OrderDetails } from "../../OrderDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../services/store";
 import { useDrop } from "react-dnd";
-import { addBurgerConstructor, replaceBurgerConstructor } from "../../../services/burgerConstructorSlice";
-import { decrementBurgerIngredients, incrementBurgerIngredients } from "../../../services/burgerIngredientsSlice";
+import { addBurgerConstructor, replaceBurgerConstructor, clearBurgerConstructor } from "../../../services/burgerConstructorSlice";
+import {
+    decrementBurgerIngredients,
+    incrementBurgerIngredients,
+    resetBurgerIngredientsCounters,
+} from "../../../services/burgerIngredientsSlice";
 import { useModal } from "../../../hooks/useModal";
 import { postOrder, resetOrderDetails } from "../../../services/orderDetailsSlice";
 import { BurgerConstructorIngredients } from "../../BurgerConstructorIngredients";
@@ -24,6 +28,9 @@ export function BurgerConstructor() {
 
     const { constructorItems } = useSelector((state: RootState) => state.burgerConstructor);
     const { burgerIngredients } = useSelector((state: RootState) => state.burgerIngredients);
+    const { orderDetailsNumber, orderDetailsNumberRequest, orderDetailsNumberFailed } = useSelector(
+        (state: RootState) => state.orderDetails,
+    );
 
     const bunIbgredient = constructorItems.find((ingredient) => ingredient.type === "bun");
     const ingredients = constructorItems
@@ -79,6 +86,21 @@ export function BurgerConstructor() {
             openModal();
         } else {
             navigate("/login");
+        }
+    };
+
+    // Очищаем конструктор после успешного получения номера заказа
+    useEffect(() => {
+        if (orderDetailsNumber && !orderDetailsNumberRequest) {
+            dispatch(clearBurgerConstructor());
+            dispatch(resetBurgerIngredientsCounters());
+        }
+    }, [orderDetailsNumber, orderDetailsNumberRequest, dispatch]);
+
+    const handleCloseModal = () => {
+        if (orderDetailsNumber && !orderDetailsNumberRequest) {
+            dispatch(resetOrderDetails());
+            closeModal();
         }
     };
 
@@ -141,12 +163,7 @@ export function BurgerConstructor() {
                 </Button>
             </div>
             {isModalOpen && (
-                <Modal
-                    onClose={() => {
-                        dispatch(resetOrderDetails());
-                        closeModal();
-                    }}
-                >
+                <Modal onClose={handleCloseModal}>
                     <OrderDetails />
                 </Modal>
             )}
