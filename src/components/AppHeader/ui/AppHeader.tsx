@@ -22,7 +22,9 @@ export function AppHeader() {
                         onClick={() => navigate("/feed")}
                     />
                 </div>
-                <Logo />
+                <div onClick={() => navigate("/")} className={headerStyles.header_logo}>
+                    <Logo />
+                </div>
                 <AppHeaderButton
                     type={ESelectedTab.personalAccount}
                     isActive={location.pathname.startsWith("/profile")}
