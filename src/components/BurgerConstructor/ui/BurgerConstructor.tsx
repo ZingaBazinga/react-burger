@@ -12,10 +12,14 @@ import { decrementBurgerIngredients, incrementBurgerIngredients } from "../../..
 import { useModal } from "../../../hooks/useModal";
 import { postOrder, resetOrderDetails } from "../../../services/orderDetailsSlice";
 import { BurgerConstructorIngredients } from "../../BurgerConstructorIngredients";
+import { useAuth } from "../../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export function BurgerConstructor() {
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
     const { isModalOpen, openModal, closeModal } = useModal();
+    const { isAuth } = useAuth();
     const dropRef = useRef<HTMLDivElement>(null);
 
     const { constructorItems } = useSelector((state: RootState) => state.burgerConstructor);
@@ -64,6 +68,18 @@ export function BurgerConstructor() {
     const combinedRef = (node: HTMLDivElement | null) => {
         dropRef.current = node;
         drop(node);
+    };
+
+    const handleOrderClick = () => {
+        if (isAuth) {
+            const data = {
+                ingredients: constructorItems.map((ingredient) => ingredient._id),
+            };
+            dispatch(postOrder(data));
+            openModal();
+        } else {
+            navigate("/login");
+        }
     };
 
     return (
@@ -119,13 +135,7 @@ export function BurgerConstructor() {
                     type="primary"
                     size="large"
                     extraClass={styles.button}
-                    onClick={() => {
-                        const data = {
-                            ingredients: constructorItems.map((ingredient) => ingredient._id),
-                        };
-                        dispatch(postOrder(data));
-                        openModal();
-                    }}
+                    onClick={handleOrderClick}
                 >
                     Оформить заказ
                 </Button>
