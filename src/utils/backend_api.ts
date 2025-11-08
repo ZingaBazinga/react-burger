@@ -35,19 +35,24 @@ const refreshToken = async () => {
 };
 
 export function request(endpoint: string, options?: RequestInit) {
-    return fetch(`${BASE_URL}${endpoint}`, {
-        ...options,
-        headers: {
-            ...options?.headers,
-            Authorization: `${localStorage.getItem("accessToken")}`,
-        },
-    })
-        .then(checkResponse)
-        .then(checkSuccess)
-        .catch((error: any) => {
-            if (error.status === 403) {
-                return refreshToken();
-            }
-            return Promise.reject(error.message);
-        });
+    const makeRequest = () => {
+        return fetch(`${BASE_URL}${endpoint}`, {
+            ...options,
+            headers: {
+                ...options?.headers,
+                Authorization: `${localStorage.getItem("accessToken")}`,
+            },
+        })
+            .then(checkResponse)
+            .then(checkSuccess);
+    };
+
+    return makeRequest().catch((error: any) => {
+        if (error.status === 403) {
+            return refreshToken().then(() => {
+                return makeRequest();
+            });
+        }
+        return Promise.reject(error.message);
+    });
 }

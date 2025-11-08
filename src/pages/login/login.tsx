@@ -1,13 +1,14 @@
 import { useState } from "react";
 import styles from "./login.module.css";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../services/store";
 import { postAuthLogin } from "../../services/authSlice";
 
 export function Login() {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const dispatch = useDispatch<AppDispatch>();
 
@@ -15,8 +16,19 @@ export function Login() {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            await dispatch(postAuthLogin({ email, password })).unwrap();
+            const from = (location.state as { from?: string })?.from || "/";
+            navigate(from, { replace: true });
+        } catch (error) {
+            console.error("Ошибка входа:", error);
+        }
+    };
+
     return (
-        <div className={styles.container}>
+        <form className={styles.container} onSubmit={handleSubmit}>
             <h1 className="text text_type_main-medium">Вход</h1>
             <Input
                 type="text"
@@ -39,23 +51,11 @@ export function Login() {
                 onPointerLeaveCapture={() => {}}
             />
             <div className={styles.buttons}>
-                <Button
-                    htmlType="button"
-                    type="primary"
-                    size="medium"
-                    onClick={async () => {
-                        try {
-                            await dispatch(postAuthLogin({ email, password })).unwrap();
-                            navigate("/");
-                        } catch (error) {
-                            console.error("Ошибка входа:", error);
-                        }
-                    }}
-                >
+                <Button htmlType="submit" type="primary" size="medium">
                     Войти
                 </Button>
                 <p className={`text text_type_main-default text_color_inactive ${styles.description}`}>
-                    Вы — новый пользователь?{" "}
+                    Вы — новый пользователь?{" "}
                     <Button htmlType="button" type="secondary" size="medium" extraClass={styles.link} onClick={() => navigate("/register")}>
                         Зарегистрироваться
                     </Button>
@@ -73,6 +73,6 @@ export function Login() {
                     </Button>
                 </p>
             </div>
-        </div>
+        </form>
     );
 }

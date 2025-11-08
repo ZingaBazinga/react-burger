@@ -1,29 +1,29 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./forgot-password.module.css";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { postPasswordReset } from "../../services/profileSlice";
-import { AppDispatch, RootState } from "../../services/store";
+import { AppDispatch } from "../../services/store";
 
 export function ForgotPassword() {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const passwordResetSuccess = useSelector((state: RootState) => state.profile.passwordResetSuccess);
 
     const [email, setEmail] = useState("");
-    const handleSubmit = () => {
-        dispatch(postPasswordReset(email));
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            await dispatch(postPasswordReset(email)).unwrap();
+            localStorage.setItem("passwordResetAllowed", "true");
+            navigate("/reset-password", { state: { fromForgotPassword: true } });
+        } catch (error) {
+            console.error("Ошибка восстановления пароля:", error);
+        }
     };
 
-    useEffect(() => {
-        if (passwordResetSuccess) {
-            navigate("/reset-password");
-        }
-    }, [passwordResetSuccess, navigate]);
-
     return (
-        <div className={styles.container}>
+        <form className={styles.container} onSubmit={handleSubmit}>
             <h1 className="text text_type_main-medium">Восстановление пароля</h1>
             <Input
                 type="email"
@@ -35,14 +35,7 @@ export function ForgotPassword() {
                 onPointerLeaveCapture={() => {}}
             />
             <div className={styles.buttons}>
-                <Button
-                    htmlType="button"
-                    type="primary"
-                    size="medium"
-                    onClick={() => {
-                        handleSubmit();
-                    }}
-                >
+                <Button htmlType="submit" type="primary" size="medium">
                     Восстановить
                 </Button>
                 <p className={`text text_type_main-default text_color_inactive ${styles.description}`}>
@@ -52,6 +45,6 @@ export function ForgotPassword() {
                     </Button>
                 </p>
             </div>
-        </div>
+        </form>
     );
 }

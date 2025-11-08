@@ -1,22 +1,22 @@
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./register.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../services/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../services/store";
 import { postAuthRegister } from "../../services/authSlice";
 
 export function Register() {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const authRegisterSuccess = useSelector((state: RootState) => state.profile.authRegisterSuccess);
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         try {
             await dispatch(postAuthRegister({ name, email, password })).unwrap();
             navigate("/");
@@ -25,14 +25,8 @@ export function Register() {
         }
     };
 
-    useEffect(() => {
-        if (authRegisterSuccess) {
-            navigate("/");
-        }
-    }, [authRegisterSuccess, navigate]);
-
     return (
-        <div className={styles.container}>
+        <form className={styles.container} onSubmit={handleSubmit}>
             <h1 className="text text_type_main-medium">Регистрация</h1>
             <Input
                 type="text"
@@ -64,7 +58,7 @@ export function Register() {
                 onPointerLeaveCapture={() => {}}
             />
             <div className={styles.buttons}>
-                <Button htmlType="button" type="primary" size="medium" onClick={() => handleSubmit()}>
+                <Button htmlType="submit" type="primary" size="medium">
                     Зарегистрироваться
                 </Button>
                 <p className={`text text_type_main-default text_color_inactive ${styles.description}`}>
@@ -74,6 +68,6 @@ export function Register() {
                     </Button>
                 </p>
             </div>
-        </div>
+        </form>
     );
 }

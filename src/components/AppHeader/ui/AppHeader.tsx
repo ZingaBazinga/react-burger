@@ -18,14 +18,14 @@ export function AppHeader() {
                     <AppHeaderButton type={ESelectedTab.constructor} isActive={location.pathname === "/"} onClick={() => navigate("/")} />
                     <AppHeaderButton
                         type={ESelectedTab.orderFeed}
-                        isActive={location.pathname === "/feed"}
+                        isActive={location.pathname.startsWith("/feed")}
                         onClick={() => navigate("/feed")}
                     />
                 </div>
                 <Logo />
                 <AppHeaderButton
                     type={ESelectedTab.personalAccount}
-                    isActive={location.pathname === "/profile"}
+                    isActive={location.pathname.startsWith("/profile")}
                     onClick={() => {
                         if (isAuth) {
                             navigate("/profile");
