@@ -6,7 +6,7 @@ import { separeteVariable } from "..";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../services/store";
 import { useCallback, useEffect, useRef } from "react";
-import { getBurgerIngredients, switchBurgerIngredientsTab } from "../../../services/burgerIngredientsSlice";
+import { switchBurgerIngredientsTab } from "../../../services/burgerIngredientsSlice";
 
 export function BurgerIngredients() {
     const dispatch = useDispatch<AppDispatch>();
@@ -14,18 +14,10 @@ export function BurgerIngredients() {
     const bunRef = useRef<HTMLDivElement>(null);
     const souceRef = useRef<HTMLDivElement>(null);
     const mainRef = useRef<HTMLDivElement>(null);
-    const hasRequested = useRef(false);
 
     const { burgerIngredients, burgerIngredientsRequest, burgerIngredientsFailed, burgerIngredientsTab } = useSelector(
         (state: RootState) => state.burgerIngredients,
     );
-
-    useEffect(() => {
-        if (!hasRequested.current) {
-            hasRequested.current = true;
-            dispatch(getBurgerIngredients());
-        }
-    }, [dispatch]);
 
     const handleScroll = useCallback(() => {
         if (

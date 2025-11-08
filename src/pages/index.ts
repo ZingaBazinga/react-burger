@@ -1,5 +1,5 @@
 export { ForgotPassword } from "./forgot-password/forgot-password";
-export { Ingredients } from "./ingredients/ingredients";
+export { Ingredient } from "./ingredients/ingredients";
 export { Login } from "./login/login";
 export { Main } from "./main/main";
 export { NotFound } from "./not-found/not-found";

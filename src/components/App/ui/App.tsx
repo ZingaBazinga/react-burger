@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AppHeader } from "../../AppHeader";
 import styles from "./App.module.css";
-import { ForgotPassword, Ingredients, Login, Main, NotFound, Profile, Register, ResetPassword } from "../../../pages";
+import { ForgotPassword, Ingredient, Login, Main, NotFound, Profile, Register, ResetPassword } from "../../../pages";
+import { ProtectedRouteElement } from "../../../utils/ProtectedRoute";
 
 export function App() {
     return (
@@ -10,15 +11,14 @@ export function App() {
                 <AppHeader />
                 <main>
                     <Routes>
-                        <Route path="/forgot-password" element={<ForgotPassword />} />
+                        <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPassword />} forAuth={true} />} />
                         <Route path="/" element={<Main />} />
-                        <Route path="/feed" element={<Main />} />
-                        <Route path="/profile" element={<Profile />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/reset-password" element={<ResetPassword />} />
-                        <Route path="/profile" element={<Profile />} />
-                        <Route path="/ingredients/:id" element={<Ingredients />} />
+                        <Route path="/ingredients/:id" element={<Ingredient />} />
+                        <Route path="/feed" element={<>feed</>} />
+                        <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} />} />
+                        <Route path="/login" element={<ProtectedRouteElement element={<Login />} forAuth={true} />} />
+                        <Route path="/register" element={<ProtectedRouteElement element={<Register />} forAuth={true} />} />
+                        <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPassword />} forAuth={true} />} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </main>
