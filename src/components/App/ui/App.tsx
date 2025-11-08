@@ -14,7 +14,7 @@ export function App() {
                         <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPassword />} forAuth={true} />} />
                         <Route path="/" element={<Main />} />
                         <Route path="/ingredients/:id" element={<Ingredient />} />
-                        <Route path="/feed" element={<>feed</>} />
+                        <Route path="/feed" element={<ProtectedRouteElement element={<>feed</>} forAuth={false} />} />
                         <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} />} />
                         <Route path="/profile/orders" element={<ProtectedRouteElement element={<ProfileOrders />} forAuth={true} />} />
                         <Route path="/login" element={<ProtectedRouteElement element={<Login />} forAuth={true} />} />
