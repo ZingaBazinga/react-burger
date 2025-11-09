@@ -4,13 +4,11 @@ import { useLocation, useParams } from "react-router-dom";
 import { Modal } from "../../components/Modal";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { resetIngredientDetails, setIngredientDetails } from "../../services/ingredientDetailsSlice";
-import { useRef, useEffect } from "react";
-import { getBurgerIngredients } from "../../services/burgerIngredientsSlice";
+import { useEffect } from "react";
 
 export function Ingredient() {
     const location = useLocation();
     const background = location.state?.background;
-    const hasRequested = useRef(false);
     const dispatch = useAppDispatch();
     const { id } = useParams<{ id: string }>();
     const { burgerIngredients } = useAppSelector((state) => state.burgerIngredients);
@@ -20,13 +18,6 @@ export function Ingredient() {
         dispatch(resetIngredientDetails());
         window.history.back();
     };
-
-    useEffect(() => {
-        if (!hasRequested.current && !background) {
-            hasRequested.current = true;
-            dispatch(getBurgerIngredients());
-        }
-    }, [dispatch, background]);
 
     useEffect(() => {
         if (ingredient) {

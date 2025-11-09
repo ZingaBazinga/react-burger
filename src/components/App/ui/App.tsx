@@ -3,6 +3,9 @@ import { AppHeader } from "../../AppHeader";
 import styles from "./App.module.css";
 import { ForgotPassword, Ingredient, Login, Main, NotFound, Profile, ProfileOrders, Register, ResetPassword } from "../../../pages";
 import { ProtectedRouteElement } from "../../../utils/ProtectedRoute";
+import { useAppDispatch } from "../../../hooks/redux";
+import { useEffect, useRef } from "react";
+import { getBurgerIngredients } from "../../../services/burgerIngredientsSlice";
 
 function AppRoutes() {
     const location = useLocation();
@@ -32,6 +35,15 @@ function AppRoutes() {
 }
 
 export function App() {
+    const dispatch = useAppDispatch();
+    const hasRequested = useRef(false);
+
+    useEffect(() => {
+        if (!hasRequested.current) {
+            hasRequested.current = true;
+            dispatch(getBurgerIngredients());
+        }
+    }, [dispatch]);
     return (
         <Router>
             <div className={styles.App}>
