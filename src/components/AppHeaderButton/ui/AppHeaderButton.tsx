@@ -34,7 +34,7 @@ export function AppHeaderButton(props: AppHeaderButtonProps) {
         <nav
             className={`${headerStyles.header_button}`}
             onClick={() => {
-                props.setIsActive(props.type);
+                props.onClick?.();
             }}
         >
             <HeaderIcon />

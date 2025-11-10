@@ -3,13 +3,17 @@ import burgerConstructorReducer from "./burgerConstructorSlice";
 import burgerIngredientsReducer from "./burgerIngredientsSlice";
 import ingredientDetailsReducer from "./ingredientDetailsSlice";
 import orederDetailsReducer from "./orderDetailsSlice";
+import profileReducer from "./profileSlice";
+import authReducer from "./authSlice";
 
 export const store = configureStore({
     reducer: {
+        auth: authReducer,
         burgerConstructor: burgerConstructorReducer,
         burgerIngredients: burgerIngredientsReducer,
         ingredientDetails: ingredientDetailsReducer,
         orderDetails: orederDetailsReducer,
+        profile: profileReducer,
     },
     devTools: process.env.NODE_ENV !== "production",
 });

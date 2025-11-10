@@ -1,12 +1,9 @@
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../../hooks/redux";
 import icon from "../../../assets/done.svg";
 import styles from "./OrderDetails.module.css";
-import { RootState } from "../../../services/store";
 
 export function OrderDetails() {
-    const { orderDetailsNumber, orderDetailsNumberRequest, orderDetailsNumberFailed } = useSelector(
-        (state: RootState) => state.orderDetails,
-    );
+    const { orderDetailsNumber, orderDetailsNumberRequest, orderDetailsNumberFailed } = useAppSelector((state) => state.orderDetails);
 
     if (orderDetailsNumberRequest) {
         return (

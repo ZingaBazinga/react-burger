@@ -1,0 +1,12 @@
+.aside {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+}
+.link {
+    height: 64px;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: flex-start;
+}

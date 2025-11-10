@@ -41,6 +41,12 @@ const burgerIngredientsSlice = createSlice({
                 return { ...ingredient };
             });
         },
+        resetBurgerIngredientsCounters: (state) => {
+            state.burgerIngredients = state.burgerIngredients.map((ingredient) => ({
+                ...ingredient,
+                __v: 0,
+            }));
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -59,5 +65,6 @@ const burgerIngredientsSlice = createSlice({
     },
 });
 
-export const { switchBurgerIngredientsTab, incrementBurgerIngredients, decrementBurgerIngredients } = burgerIngredientsSlice.actions;
+export const { switchBurgerIngredientsTab, incrementBurgerIngredients, decrementBurgerIngredients, resetBurgerIngredientsCounters } =
+    burgerIngredientsSlice.actions;
 export default burgerIngredientsSlice.reducer;

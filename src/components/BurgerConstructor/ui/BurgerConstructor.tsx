@@ -1,25 +1,33 @@
 import { Button, ConstructorElement, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerConstructor.module.css";
 import { IIngredient, IConstructorIngredient } from "../../../entities/ingredient";
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useEffect } from "react";
 import { Modal } from "../../Modal";
 import { OrderDetails } from "../../OrderDetails";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../services/store";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { useDrop } from "react-dnd";
-import { addBurgerConstructor, replaceBurgerConstructor } from "../../../services/burgerConstructorSlice";
-import { decrementBurgerIngredients, incrementBurgerIngredients } from "../../../services/burgerIngredientsSlice";
+import { addBurgerConstructor, replaceBurgerConstructor, clearBurgerConstructor } from "../../../services/burgerConstructorSlice";
+import {
+    decrementBurgerIngredients,
+    incrementBurgerIngredients,
+    resetBurgerIngredientsCounters,
+} from "../../../services/burgerIngredientsSlice";
 import { useModal } from "../../../hooks/useModal";
 import { postOrder, resetOrderDetails } from "../../../services/orderDetailsSlice";
 import { BurgerConstructorIngredients } from "../../BurgerConstructorIngredients";
+import { useAuth } from "../../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export function BurgerConstructor() {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const { isModalOpen, openModal, closeModal } = useModal();
+    const { isAuth } = useAuth();
     const dropRef = useRef<HTMLDivElement>(null);
 
-    const { constructorItems } = useSelector((state: RootState) => state.burgerConstructor);
-    const { burgerIngredients } = useSelector((state: RootState) => state.burgerIngredients);
+    const { constructorItems } = useAppSelector((state) => state.burgerConstructor);
+    const { burgerIngredients } = useAppSelector((state) => state.burgerIngredients);
+    const { orderDetailsNumber, orderDetailsNumberRequest } = useAppSelector((state) => state.orderDetails);
 
     const bunIbgredient = constructorItems.find((ingredient) => ingredient.type === "bun");
     const ingredients = constructorItems
@@ -64,6 +72,33 @@ export function BurgerConstructor() {
     const combinedRef = (node: HTMLDivElement | null) => {
         dropRef.current = node;
         drop(node);
+    };
+
+    const handleOrderClick = () => {
+        if (isAuth) {
+            const data = {
+                ingredients: constructorItems.map((ingredient) => ingredient._id),
+            };
+            dispatch(postOrder(data));
+            openModal();
+        } else {
+            navigate("/login");
+        }
+    };
+
+    // Очищаем конструктор после успешного получения номера заказа
+    useEffect(() => {
+        if (orderDetailsNumber && !orderDetailsNumberRequest) {
+            dispatch(clearBurgerConstructor());
+            dispatch(resetBurgerIngredientsCounters());
+        }
+    }, [orderDetailsNumber, orderDetailsNumberRequest, dispatch]);
+
+    const handleCloseModal = () => {
+        if (orderDetailsNumber && !orderDetailsNumberRequest) {
+            dispatch(resetOrderDetails());
+            closeModal();
+        }
     };
 
     return (
@@ -119,24 +154,13 @@ export function BurgerConstructor() {
                     type="primary"
                     size="large"
                     extraClass={styles.button}
-                    onClick={() => {
-                        const data = {
-                            ingredients: constructorItems.map((ingredient) => ingredient._id),
-                        };
-                        dispatch(postOrder(data));
-                        openModal();
-                    }}
+                    onClick={handleOrderClick}
                 >
                     Оформить заказ
                 </Button>
             </div>
             {isModalOpen && (
-                <Modal
-                    onClose={() => {
-                        dispatch(resetOrderDetails());
-                        closeModal();
-                    }}
-                >
+                <Modal onClose={handleCloseModal}>
                     <OrderDetails />
                 </Modal>
             )}

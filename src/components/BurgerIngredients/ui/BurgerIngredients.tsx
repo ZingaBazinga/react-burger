@@ -3,60 +3,70 @@ import styles from "./BurgerIngredients.module.css";
 import { EIngredientType } from "../../../entities/ingredient";
 import { BurgerIngredientsContent } from "../../BurgerIngredientsContent";
 import { separeteVariable } from "..";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../services/store";
-import { useCallback, useEffect, useRef } from "react";
-import { getBurgerIngredients, switchBurgerIngredientsTab } from "../../../services/burgerIngredientsSlice";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { useEffect, useRef, useState } from "react";
+import { switchBurgerIngredientsTab } from "../../../services/burgerIngredientsSlice";
+import { useInView } from "react-intersection-observer";
 
 export function BurgerIngredients() {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
+    const [rootElement, setRootElement] = useState<HTMLDivElement | null>(null);
     const ingredientsContainerRef = useRef<HTMLDivElement>(null);
     const bunRef = useRef<HTMLDivElement>(null);
     const souceRef = useRef<HTMLDivElement>(null);
     const mainRef = useRef<HTMLDivElement>(null);
-    const hasRequested = useRef(false);
 
-    const { burgerIngredients, burgerIngredientsRequest, burgerIngredientsFailed, burgerIngredientsTab } = useSelector(
-        (state: RootState) => state.burgerIngredients,
+    const { burgerIngredients, burgerIngredientsRequest, burgerIngredientsFailed, burgerIngredientsTab } = useAppSelector(
+        (state) => state.burgerIngredients,
     );
 
-    useEffect(() => {
-        if (!hasRequested.current) {
-            hasRequested.current = true;
-            dispatch(getBurgerIngredients());
-        }
-    }, [dispatch]);
+    const setIngredientsContainerRef = (node: HTMLDivElement | null) => {
+        ingredientsContainerRef.current = node;
+        setRootElement(node);
+    };
 
-    const handleScroll = useCallback(() => {
-        if (
-            ingredientsContainerRef &&
-            ingredientsContainerRef.current &&
-            bunRef &&
-            bunRef.current &&
-            souceRef &&
-            souceRef.current &&
-            mainRef &&
-            mainRef.current
-        ) {
-            const bunHeight = bunRef.current?.offsetHeight;
-            const sauceHeight = bunHeight + souceRef.current?.offsetHeight + 40;
-            if (ingredientsContainerRef.current.scrollTop < bunHeight) {
-                dispatch(switchBurgerIngredientsTab(EIngredientType.bun));
-            } else if (ingredientsContainerRef.current.scrollTop >= bunHeight && ingredientsContainerRef.current.scrollTop < sauceHeight) {
-                dispatch(switchBurgerIngredientsTab(EIngredientType.sauce));
-            } else if (ingredientsContainerRef.current.scrollTop >= sauceHeight) {
-                dispatch(switchBurgerIngredientsTab(EIngredientType.main));
-            }
-        }
-    }, [dispatch]);
+    const { ref: bunInViewRef, inView: bunInView } = useInView({
+        root: rootElement,
+        rootMargin: "-1px 0px -80% 0px",
+        threshold: 0,
+    });
+
+    const { ref: sauceInViewRef, inView: sauceInView } = useInView({
+        root: rootElement,
+        rootMargin: "-1px 0px -80% 0px",
+        threshold: 0,
+    });
+
+    const { ref: mainInViewRef, inView: mainInView } = useInView({
+        root: rootElement,
+        rootMargin: "-1px 0px -80% 0px",
+        threshold: 0,
+    });
+
+    const setBunRef = (node: HTMLDivElement | null) => {
+        bunRef.current = node;
+        bunInViewRef(node);
+    };
+
+    const setSauceRef = (node: HTMLDivElement | null) => {
+        souceRef.current = node;
+        sauceInViewRef(node);
+    };
+
+    const setMainRef = (node: HTMLDivElement | null) => {
+        mainRef.current = node;
+        mainInViewRef(node);
+    };
 
     useEffect(() => {
-        const currentRef = ingredientsContainerRef.current;
-        currentRef?.addEventListener("scroll", handleScroll);
-        return function () {
-            currentRef?.removeEventListener("scroll", handleScroll);
-        };
-    }, [handleScroll]);
+        if (bunInView) {
+            dispatch(switchBurgerIngredientsTab(EIngredientType.bun));
+        } else if (sauceInView) {
+            dispatch(switchBurgerIngredientsTab(EIngredientType.sauce));
+        } else if (mainInView) {
+            dispatch(switchBurgerIngredientsTab(EIngredientType.main));
+        }
+    }, [bunInView, sauceInView, mainInView, dispatch]);
 
     if (burgerIngredientsRequest) {
         return (
@@ -146,10 +156,10 @@ export function BurgerIngredients() {
                     Начинки
                 </Tab>
             </div>
-            <div ref={ingredientsContainerRef} className={`${styles.ingredients}`}>
-                <BurgerIngredientsContent ref={bunRef} ingredient={bun} type={EIngredientType.bun} />
-                <BurgerIngredientsContent ref={souceRef} ingredient={sauce} type={EIngredientType.sauce} />
-                <BurgerIngredientsContent ref={mainRef} ingredient={main} type={EIngredientType.main} />
+            <div ref={setIngredientsContainerRef} className={`${styles.ingredients}`}>
+                <BurgerIngredientsContent ref={setBunRef} ingredient={bun} type={EIngredientType.bun} />
+                <BurgerIngredientsContent ref={setSauceRef} ingredient={sauce} type={EIngredientType.sauce} />
+                <BurgerIngredientsContent ref={setMainRef} ingredient={main} type={EIngredientType.main} />
             </div>
         </div>
     );

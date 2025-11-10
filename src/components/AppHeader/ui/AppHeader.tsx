@@ -1,28 +1,40 @@
-import { useState } from "react";
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
 import headerStyles from "./AppHeader.module.css";
 import { AppHeaderButton } from "../../AppHeaderButton";
 import { ESelectedTab } from "../../../types/SelectedTab";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../hooks/useAuth";
 
 export function AppHeader() {
-    const [select, setSelect] = useState<ESelectedTab>(ESelectedTab.constructor);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const { isAuth } = useAuth();
 
     return (
         <header className={`${headerStyles.header}`}>
             <div className={headerStyles.header_content}>
                 <div className={headerStyles.header_left}>
+                    <AppHeaderButton type={ESelectedTab.constructor} isActive={location.pathname === "/"} onClick={() => navigate("/")} />
                     <AppHeaderButton
-                        type={ESelectedTab.constructor}
-                        isActive={select === ESelectedTab.constructor}
-                        setIsActive={setSelect}
+                        type={ESelectedTab.orderFeed}
+                        isActive={location.pathname.startsWith("/feed")}
+                        onClick={() => navigate("/feed")}
                     />
-                    <AppHeaderButton type={ESelectedTab.orderFeed} isActive={select === ESelectedTab.orderFeed} setIsActive={setSelect} />
                 </div>
-                <Logo />
+                <div onClick={() => navigate("/")} className={headerStyles.header_logo}>
+                    <Logo />
+                </div>
                 <AppHeaderButton
                     type={ESelectedTab.personalAccount}
-                    isActive={select === ESelectedTab.personalAccount}
-                    setIsActive={setSelect}
+                    isActive={location.pathname.startsWith("/profile")}
+                    onClick={() => {
+                        if (isAuth) {
+                            navigate("/profile");
+                        } else {
+                            navigate("/login");
+                        }
+                    }}
                 />
             </div>
         </header>

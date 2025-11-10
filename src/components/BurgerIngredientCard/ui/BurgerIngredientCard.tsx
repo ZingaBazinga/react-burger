@@ -1,18 +1,17 @@
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredientCard.module.css";
 import { IIngredient } from "../../../entities/ingredient";
-import { Modal } from "../../Modal";
-import { IngredientDetails } from "../../IngredientDetails";
-import { useModal } from "../../../hooks/useModal";
 import { useDrag } from "react-dnd";
 import { useRef } from "react";
-import { useDispatch } from "react-redux";
-import { resetIngredientDetails, setIngredientDetails } from "../../../services/ingredientDetailsSlice";
+import { useAppDispatch } from "../../../hooks/redux";
+import { setIngredientDetails } from "../../../services/ingredientDetailsSlice";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export function BurgerIngredientCard(props: IIngredient) {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const dragRef = useRef<HTMLDivElement>(null);
-    const { isModalOpen, openModal, closeModal } = useModal();
+    const location = useLocation();
 
     const [, drag] = useDrag(() => ({
         type: "constructor",
@@ -27,16 +26,15 @@ export function BurgerIngredientCard(props: IIngredient) {
         drag(node);
     };
 
+    const handleClick = () => {
+        dispatch(setIngredientDetails(props));
+        navigate(`/ingredients/${props._id}`, {
+            state: { background: location },
+        });
+    };
+
     return (
-        <div
-            ref={combinedRef}
-            key={props._id}
-            className={styles.card}
-            onClick={() => {
-                dispatch(setIngredientDetails(props));
-                openModal();
-            }}
-        >
+        <div ref={combinedRef} key={props._id} className={styles.card} onClick={handleClick}>
             <img className={styles.image} src={props.image} alt={props.name} />
             <div className={styles.price}>
                 <span className="text text_type_digits-default">{props.price}</span>
@@ -44,17 +42,6 @@ export function BurgerIngredientCard(props: IIngredient) {
             </div>
             <span className="text text_type_main-default">{props.name}</span>
             {props.__v !== 0 && <Counter count={props.__v} size="default" extraClass="m-1" />}
-            {isModalOpen && (
-                <Modal
-                    onClose={() => {
-                        dispatch(resetIngredientDetails());
-                        closeModal();
-                    }}
-                    header="Детали ингредиента"
-                >
-                    <IngredientDetails />
-                </Modal>
-            )}
         </div>
     );
 }
