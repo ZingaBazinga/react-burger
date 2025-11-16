@@ -2,6 +2,11 @@ import { IRefreshTokenResponse } from "../entities/profile";
 
 export const BASE_URL = "http://norma.education-services.ru/api/";
 
+interface IApiSuccessResponse {
+    success: boolean;
+    data: unknown;
+}
+
 const checkResponse = (res: Response) => {
     if (res.ok) {
         return res.json();
@@ -9,7 +14,7 @@ const checkResponse = (res: Response) => {
     return Promise.reject({ status: res.status, message: `Ошибка ${res.status}` });
 };
 
-const checkSuccess = (res: any) => {
+const checkSuccess = <T extends IApiSuccessResponse>(res: T) => {
     if (res && res.success) {
         return res;
     }
