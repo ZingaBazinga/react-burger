@@ -2,6 +2,11 @@ import { IRefreshTokenResponse } from "../entities/profile";
 
 export const BASE_URL = "http://norma.education-services.ru/api/";
 
+interface IApiSuccessResponse {
+    success: boolean;
+    data: unknown;
+}
+
 const checkResponse = (res: Response) => {
     if (res.ok) {
         return res.json();
@@ -9,7 +14,7 @@ const checkResponse = (res: Response) => {
     return Promise.reject({ status: res.status, message: `Ошибка ${res.status}` });
 };
 
-const checkSuccess = (res: any) => {
+const checkSuccess = <T extends IApiSuccessResponse>(res: T) => {
     if (res && res.success) {
         return res;
     }
@@ -25,7 +30,8 @@ const refreshToken = async () => {
             },
             body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
         });
-        const jsonData: IRefreshTokenResponse = await response.json();
+        const checkedResponse = await checkResponse(response);
+        const jsonData: IRefreshTokenResponse = await checkSuccess(checkedResponse);
         localStorage.setItem("accessToken", jsonData.accessToken);
         localStorage.setItem("refreshToken", jsonData.refreshToken);
         return jsonData.success;
@@ -47,7 +53,7 @@ export function request(endpoint: string, options?: RequestInit) {
             .then(checkSuccess);
     };
 
-    return makeRequest().catch((error: any) => {
+    return makeRequest().catch((error: { status: number; message: string }) => {
         if (error.status === 403) {
             return refreshToken().then(() => {
                 return makeRequest();
