@@ -88,7 +88,6 @@ export const patchAuthUser = createAsyncThunk(
                 },
                 body: JSON.stringify(data),
             });
-            console.log("patchAuthUser", jsonData);
 
             return jsonData.user;
         } catch (error) {
