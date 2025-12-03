@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { AppHeader } from "../../AppHeader";
 import styles from "./App.module.css";
-import { ForgotPassword, Ingredient, Login, Main, NotFound, Profile, ProfileOrders, Register, ResetPassword } from "../../../pages";
+import { ForgotPassword, Ingredient, Login, Main, NotFound, Profile, ProfileOrders, Register, ResetPassword, Feed } from "../../../pages";
 import { ProtectedRouteElement } from "../../../utils/ProtectedRoute";
 import { useAppDispatch } from "../../../hooks/redux";
 import { useEffect, useRef } from "react";
@@ -17,7 +17,7 @@ function AppRoutes() {
                 <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPassword />} forAuth={true} />} />
                 <Route path="/" element={<Main />} />
                 {!background && <Route path="/ingredients/:id" element={<Ingredient />} />}
-                <Route path="/feed" element={<ProtectedRouteElement element={<>feed</>} forAuth={false} />} />
+                <Route path="/feed" element={<ProtectedRouteElement element={<Feed />} forAuth={false} />} />
                 <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} />} />
                 <Route path="/profile/orders" element={<ProtectedRouteElement element={<ProfileOrders />} forAuth={true} />} />
                 <Route path="/login" element={<ProtectedRouteElement element={<Login />} forAuth={true} />} />
