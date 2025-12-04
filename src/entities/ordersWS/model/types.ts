@@ -1,10 +1,11 @@
 export interface IOrder {
-    ingredients: string[];
-    _id: string;
-    status: "done" | "created" | "pending" | "cancelled";
-    number: number;
     createdAt: string;
+    ingredients: string[];
+    name: string;
+    number: number;
+    status: "done" | "created" | "pending" | "cancelled";
     updatedAt: string;
+    _id: string;
 }
 
 export interface IOrdersResponse {

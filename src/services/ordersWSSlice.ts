@@ -1,7 +1,7 @@
 // ordersWSSlice.ts
 import { createSlice } from "@reduxjs/toolkit";
 import { wsClose, wsError, wsMessage, wsOpen } from "./middleware/action-types";
-import { IOrder, IOrdersResponse } from "../entities/ordersWS";
+import { IOrdersResponse } from "../entities/ordersWS";
 
 interface OrdersWSState {
     isConnected: boolean;
