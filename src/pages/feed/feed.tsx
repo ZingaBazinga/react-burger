@@ -60,13 +60,18 @@ export function Feed() {
                             <span className="text text_type_main-medium">{order.name}</span>
                             <div className={styles["feed-order__details"]}>
                                 <div className={styles["feed-order__ingredients"]}>
-                                    {order.ingredients.slice(0, 6).map((ingredientId) => (
+                                    {order.ingredients.slice(0, 6).map((ingredientId, index) => (
                                         <div key={ingredientId} className={styles["feed-order__ingredient__image_border"]}>
                                             <img
                                                 className={styles["feed-order__ingredient__image"]}
                                                 src={burgerIngredients.find((ingredient) => ingredient._id === ingredientId)?.image_large}
                                                 alt=""
                                             />
+                                            {index === 5 && order.ingredients.length > 6 && (
+                                                <div className={styles["feed-order__ingredient__more"]}>
+                                                    <span className="text text_type_main-default">+{order.ingredients.length - 6}</span>
+                                                </div>
+                                            )}
                                         </div>
                                     ))}
                                 </div>
@@ -78,9 +83,9 @@ export function Feed() {
                         </li>
                     ))}
                 </ul>
-                <div className={styles['feed-results']}>
-                    <div className={styles['feed-results__statuses']}>
-                        <div className={styles['feed-results__statuses_column']}>
+                <div className={styles["feed-results"]}>
+                    <div className={styles["feed-results__statuses"]}>
+                        <div className={styles["feed-results__statuses_column"]}>
                             <span className="text text_type_main-medium">Готовы:</span>
                             <div className={clsx(styles["feed-results__orders"], styles["feed-results__orders_ready"])}>
                                 <p className="text text_type_digits-default">034533</p>
@@ -90,7 +95,7 @@ export function Feed() {
                                 <p className="text text_type_digits-default">034525</p>
                             </div>
                         </div>
-                        <div className={styles['feed-results__statuses_column']}>
+                        <div className={styles["feed-results__statuses_column"]}>
                             <span className="text text_type_main-medium">В работе:</span>
                             <div className={styles["feed-results__orders"]}>
                                 <p className="text text_type_digits-default">034538</p>
