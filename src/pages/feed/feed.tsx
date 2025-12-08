@@ -1,15 +1,19 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../services/store";
 import { useCallback, useEffect, useMemo } from "react";
 import { wsConnect, wsDisconnect } from "../../services/middleware/action-types";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./feed.module.css";
-import { useAppSelector } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import clsx from "clsx";
+import { useLocation, useNavigate } from "react-router-dom";
+import { setOrder } from "../../services/orderSlice";
+import { IOrder } from "../../entities/ordersWS";
+import { WS_BASE_URL } from "../../utils/backend_api";
 
 export function Feed() {
-    const dispatch = useDispatch();
-    const { orders, isConnected, error } = useSelector((state: RootState) => state.ordersWS);
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { orders, error } = useAppSelector((state) => state.ordersWS);
 
     const { burgerIngredients } = useAppSelector((state) => state.burgerIngredients);
 
@@ -28,13 +32,46 @@ export function Feed() {
     );
 
     useEffect(() => {
-        if (!isConnected) {
-            dispatch(wsConnect("wss://norma.education-services.ru/orders/all"));
-        }
+        dispatch(wsConnect(`${WS_BASE_URL}/orders/all`));
         return () => {
             dispatch(wsDisconnect());
         };
     }, [dispatch]);
+
+    // Разделение заказов на "Готовы" (done) и "В работе" (pending/created)
+    const readyOrders = useMemo(() => {
+        if (!orders) return [];
+        return orders.orders.filter((order) => order.status === "done").map((order) => order.number);
+    }, [orders]);
+
+    const inWorkOrders = useMemo(() => {
+        if (!orders) return [];
+        return orders.orders.filter((order) => order.status === "pending" || order.status === "created").map((order) => order.number);
+    }, [orders]);
+
+    // Разбиение на колонки по 10 элементов
+    const readyColumns = useMemo(() => {
+        const columns: number[][] = [];
+        for (let i = 0; i < readyOrders.length; i += 10) {
+            columns.push(readyOrders.slice(i, i + 10));
+        }
+        return columns;
+    }, [readyOrders]);
+
+    const inWorkColumns = useMemo(() => {
+        const columns: number[][] = [];
+        for (let i = 0; i < inWorkOrders.length; i += 10) {
+            columns.push(inWorkOrders.slice(i, i + 10));
+        }
+        return columns;
+    }, [inWorkOrders]);
+
+    const handleClick = (order: IOrder) => {
+        dispatch(setOrder(order));
+        navigate(`/feed/${order._id}`, {
+            state: { background: location },
+        });
+    };
 
     if (error) {
         return <div>Ошибка: {error}</div>;
@@ -50,7 +87,7 @@ export function Feed() {
             <div className={styles.feed__content}>
                 <ul className={styles.feed__orders}>
                     {orders.orders.map((order) => (
-                        <li key={order._id} className={styles["feed-order"]}>
+                        <li key={order._id} className={styles["feed-order"]} onClick={() => handleClick(order)}>
                             <div className={styles["feed-order__header"]}>
                                 <span className="text text_type_digits-default">#{order.number}</span>
                                 <span className="text text_type_main-default text_color_inactive">
@@ -61,7 +98,7 @@ export function Feed() {
                             <div className={styles["feed-order__details"]}>
                                 <div className={styles["feed-order__ingredients"]}>
                                     {order.ingredients.slice(0, 6).map((ingredientId, index) => (
-                                        <div key={ingredientId} className={styles["feed-order__ingredient__image_border"]}>
+                                        <div key={`${ingredientId}-${index}`} className={styles["feed-order__ingredient__image_border"]}>
                                             <img
                                                 className={styles["feed-order__ingredient__image"]}
                                                 src={burgerIngredients.find((ingredient) => ingredient._id === ingredientId)?.image_large}
@@ -87,20 +124,33 @@ export function Feed() {
                     <div className={styles["feed-results__statuses"]}>
                         <div className={styles["feed-results__statuses_column"]}>
                             <span className="text text_type_main-medium">Готовы:</span>
-                            <div className={clsx(styles["feed-results__orders"], styles["feed-results__orders_ready"])}>
-                                <p className="text text_type_digits-default">034533</p>
-                                <p className="text text_type_digits-default">034532</p>
-                                <p className="text text_type_digits-default">034530</p>
-                                <p className="text text_type_digits-default">034527</p>
-                                <p className="text text_type_digits-default">034525</p>
+                            <div className={styles["feed-results__statuses_column-orders"]}>
+                                {readyColumns.map((column, columnIndex) => (
+                                    <div
+                                        key={columnIndex}
+                                        className={clsx(styles["feed-results__orders"], styles["feed-results__orders_ready"])}
+                                    >
+                                        {column.map((orderNumber) => (
+                                            <p key={orderNumber} className="text text_type_digits-default">
+                                                {String(orderNumber).padStart(6, "0")}
+                                            </p>
+                                        ))}
+                                    </div>
+                                ))}
                             </div>
                         </div>
                         <div className={styles["feed-results__statuses_column"]}>
                             <span className="text text_type_main-medium">В работе:</span>
-                            <div className={styles["feed-results__orders"]}>
-                                <p className="text text_type_digits-default">034538</p>
-                                <p className="text text_type_digits-default">034541</p>
-                                <p className="text text_type_digits-default">034542</p>
+                            <div className={styles["feed-results__statuses_column-orders"]}>
+                                {inWorkColumns.map((column, columnIndex) => (
+                                    <div key={columnIndex} className={styles["feed-results__orders"]}>
+                                        {column.map((orderNumber) => (
+                                            <p key={orderNumber} className="text text_type_digits-default">
+                                                {String(orderNumber).padStart(6, "0")}
+                                            </p>
+                                        ))}
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,99 @@
+.profile-orders {
+    gap: 60px;
+    display: flex;
+}
+.orders {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    /* width: 50%; */
+    /* padding: 0 16px 0 8px; */
+    padding-right: 16px;
+    overflow-y: auto;
+    margin-top: 40px;
+    overflow-x: hidden;
+}
+.order {
+    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border-radius: 40px;
+    background-color: #1c1c21;
+    box-shadow: 0px 0px 1px 0px #0000000a;
+    box-shadow: 0px 0px 2px 0px #0000000f;
+    box-shadow: 0px 4px 8px 0px #0000000a;
+}
+.order__header {
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+}
+.order__name {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.order__details {
+    justify-content: space-between;
+    display: flex;
+}
+.order__ingredients {
+    display: flex;
+    flex-direction: row;
+}
+.order__ingredient__image_border {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(63.18deg, #801ab3 0%, #4c4cff 100%);
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: -16px;
+    &:first-child {
+        margin-left: 0;
+    }
+    position: relative;
+}
+.order__ingredient__image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #131316;
+}
+.order__ingredient__more {
+    display: flex;
+    position: absolute;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    align-items: center;
+    justify-content: center;
+    background-color: #000000ac;
+}
+.order__ingredient__image_border:nth-child(1) {
+    z-index: 6;
+}
+.order__ingredient__image_border:nth-child(2) {
+    z-index: 5;
+}
+.order__ingredient__image_border:nth-child(3) {
+    z-index: 4;
+}
+.order__ingredient__image_border:nth-child(4) {
+    z-index: 3;
+}
+.order__ingredient__image_border:nth-child(5) {
+    z-index: 2;
+}
+.order__ingredient__image_border:nth-child(6) {
+    z-index: 1;
+}
+.order__price {
+    gap: 8px;
+    display: flex;
+    align-items: center;
+}

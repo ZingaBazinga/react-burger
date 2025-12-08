@@ -8,3 +8,4 @@ export { Register } from "./register/register";
 export { ResetPassword } from "./reset-password/reset-password";
 export { ProfileOrders } from "./profile-orders/profile-orders";
 export { Feed } from "./feed/feed";
+export { Order } from "./order/order";

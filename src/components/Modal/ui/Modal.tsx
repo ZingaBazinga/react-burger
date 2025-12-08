@@ -39,7 +39,7 @@ export function Modal({ children, header, onClose }: ModalProps) {
                         e.stopPropagation();
                     }}
                 >
-                    <span className={`text text_type_main-large`}>{header}</span>
+                    <span className={header?.includes("#") ? `text text_type_digits-default` : `text text_type_main-large`}>{header}</span>
                     <CloseIcon
                         type="primary"
                         onClick={() => {

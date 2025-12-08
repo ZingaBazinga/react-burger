@@ -34,9 +34,9 @@ export const socketMiddleware = (wsActions: { connect: string; disconnect: strin
 
             // Подключение
             if (type === wsActions.connect) {
-                if (isPayloadAction<string>(action, wsActions.connect)) {
-                    const url = action.payload;
+                const url = (action as PayloadAction<string>).payload;
 
+                if (url && typeof url === "string") {
                     if (socket) {
                         socket.close();
                     }
@@ -48,8 +48,12 @@ export const socketMiddleware = (wsActions: { connect: string; disconnect: strin
                     };
 
                     socket.onmessage = (event) => {
-                        const data = JSON.parse(event.data);
-                        dispatch(wsMessage(data));
+                        try {
+                            const data = JSON.parse(event.data);
+                            dispatch(wsMessage(data));
+                        } catch (error) {
+                            dispatch(wsError("Ошибка парсинга сообщения"));
+                        }
                     };
 
                     socket.onclose = () => {

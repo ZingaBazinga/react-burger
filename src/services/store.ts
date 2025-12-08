@@ -1,4 +1,3 @@
-// store.ts
 import { configureStore } from "@reduxjs/toolkit";
 import burgerConstructorReducer from "./burgerConstructorSlice";
 import burgerIngredientsReducer from "./burgerIngredientsSlice";
@@ -9,6 +8,7 @@ import authReducer from "./authSlice";
 import { socketMiddleware } from "./middleware/socketMiddleware";
 import { wsConnect, wsDisconnect } from "./middleware/action-types";
 import ordersWSSlice from "./ordersWSSlice";
+import orderSlice from "./orderSlice";
 
 export const store = configureStore({
     reducer: {
@@ -18,7 +18,8 @@ export const store = configureStore({
         ingredientDetails: ingredientDetailsReducer,
         orderDetails: orederDetailsReducer,
         profile: profileReducer,
-        ordersWS: ordersWSSlice, // пример добавления редьюсера для WebSocket
+        ordersWS: ordersWSSlice,
+        order: orderSlice,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(

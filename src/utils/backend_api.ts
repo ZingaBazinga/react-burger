@@ -1,6 +1,7 @@
 import { IRefreshTokenResponse } from "../entities/profile";
 
 export const BASE_URL = "http://norma.education-services.ru/api/";
+export const WS_BASE_URL = "wss://norma.education-services.ru";
 
 interface IApiSuccessResponse {
     success: boolean;

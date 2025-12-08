@@ -115,6 +115,10 @@
     gap: 24px;
     width: 100%;
 }
+.feed-results__statuses_column-orders {
+    display: flex;
+    gap: 16px;
+}
 .feed-results__orders {
     gap: 8px;
     display: flex;
