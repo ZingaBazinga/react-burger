@@ -57,7 +57,7 @@ export function ProfileOrders() {
 
     const handleClick = (order: IOrder) => {
         dispatch(setOrder(order));
-        navigate(`${order._id}`, {
+        navigate(`${order.number}`, {
             state: { background: location },
         });
     };

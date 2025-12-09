@@ -68,7 +68,7 @@ export function Feed() {
 
     const handleClick = (order: IOrder) => {
         dispatch(setOrder(order));
-        navigate(`/feed/${order._id}`, {
+        navigate(`/feed/${order.number}`, {
             state: { background: location },
         });
     };
