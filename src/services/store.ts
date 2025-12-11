@@ -5,6 +5,10 @@ import ingredientDetailsReducer from "./ingredientDetailsSlice";
 import orederDetailsReducer from "./orderDetailsSlice";
 import profileReducer from "./profileSlice";
 import authReducer from "./authSlice";
+import { socketMiddleware } from "./middleware/socketMiddleware";
+import { wsConnect, wsDisconnect } from "./middleware/action-types";
+import ordersWSSlice from "./ordersWSSlice";
+import orderSlice from "./orderSlice";
 
 export const store = configureStore({
     reducer: {
@@ -14,7 +18,16 @@ export const store = configureStore({
         ingredientDetails: ingredientDetailsReducer,
         orderDetails: orederDetailsReducer,
         profile: profileReducer,
+        ordersWS: ordersWSSlice,
+        order: orderSlice,
     },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(
+            socketMiddleware({
+                connect: wsConnect.type,
+                disconnect: wsDisconnect.type,
+            }),
+        ),
     devTools: process.env.NODE_ENV !== "production",
 });
 

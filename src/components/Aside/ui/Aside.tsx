@@ -11,14 +11,16 @@ export function Aside() {
     return (
         <aside className={styles.aside}>
             <div
-                className={`${styles.link} text text_type_main-medium ${location.pathname.startsWith("/profile") ? "" : "text_color_inactive"}`}
+                className={`${styles.link} text text_type_main-medium ${location.pathname === "/profile" ? "" : "text_color_inactive"}`}
                 onClick={() => navigate("/profile")}
             >
                 Профиль
             </div>
             <div
                 className={`${styles.link} text text_type_main-medium ${location.pathname.startsWith("/profile/orders") ? "" : "text_color_inactive"}`}
-                onClick={() => navigate("/profile/orders")}
+                onClick={() => {
+                    navigate("/profile/orders");
+                }}
             >
                 История заказов
             </div>
