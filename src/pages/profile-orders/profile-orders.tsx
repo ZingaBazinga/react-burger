@@ -13,7 +13,7 @@ export function ProfileOrders() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const { orders, isConnected, error } = useAppSelector((state) => state.ordersWS);
+    const { orders, error } = useAppSelector((state) => state.ordersWS);
 
     const accessToken = localStorage.getItem("accessToken")?.replace("Bearer ", "") || "";
 
