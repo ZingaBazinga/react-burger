@@ -30,6 +30,7 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
+        "deploy-script": "npm run build && scp -i ~/.ssh/id_ed25519_yp -r ./build/* zingabazinga@89.169.183.148:/home/zingabazinga/stellar-frontend",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "format": "npx prettier . --write"
@@ -54,6 +55,8 @@
     },
     "devDependencies": {
         "@types/uuid": "^10.0.0",
-        "prettier": "3.6.2"
+        "fetch-mock": "^12.6.0",
+        "prettier": "3.6.2",
+        "redux-mock-store": "^1.5.5"
     }
 }
