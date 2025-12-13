@@ -1,2 +1,2 @@
 export { BurgerIngredients } from "./ui/BurgerIngredients";
-export { separeteVariable } from "./model/separeteVariable";
+export { separateVariable } from "./model/separeteVariable";

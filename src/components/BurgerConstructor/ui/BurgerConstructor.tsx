@@ -29,13 +29,13 @@ export function BurgerConstructor() {
     const { burgerIngredients } = useAppSelector((state) => state.burgerIngredients);
     const { orderDetailsNumber, orderDetailsNumberRequest } = useAppSelector((state) => state.orderDetails);
 
-    const bunIbgredient = constructorItems.find((ingredient) => ingredient.type === "bun");
+    const bunIngredient = constructorItems.find((ingredient) => ingredient.type === "bun");
     const ingredients = constructorItems
         .map((ingredient, index) => ({ ingredient, index }))
         .filter(({ ingredient }) => ingredient.type !== "bun");
 
     const burgerConstructor = {
-        bun: bunIbgredient,
+        bun: bunIngredient,
         ingredients: ingredients,
     };
 

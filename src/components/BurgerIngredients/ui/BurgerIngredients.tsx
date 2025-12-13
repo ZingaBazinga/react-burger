@@ -2,7 +2,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
 import { EIngredientType } from "../../../entities/ingredient";
 import { BurgerIngredientsContent } from "../../BurgerIngredientsContent";
-import { separeteVariable } from "..";
+import { separateVariable } from "..";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { useEffect, useRef, useState } from "react";
 import { switchBurgerIngredientsTab } from "../../../services/burgerIngredientsSlice";
@@ -101,7 +101,7 @@ export function BurgerIngredients() {
         );
     }
 
-    const { bun, main, sauce } = separeteVariable(burgerIngredients);
+    const { bun, main, sauce } = separateVariable(burgerIngredients);
 
     return (
         <div className={`${styles.container}`}>

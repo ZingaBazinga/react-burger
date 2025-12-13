@@ -19,7 +19,7 @@ export const postOrder = createAsyncThunk("orders", async (order: { ingredients:
 const orderDetailsSlice = createSlice({
     name: "orderDetails",
     initialState: {
-        orderDetailsNumber: null,
+        orderDetailsNumber: null as number | null,
         orderDetailsNumberRequest: false,
         orderDetailsNumberFailed: false,
     },

@@ -13,11 +13,6 @@ function isAction(action: unknown): action is Action {
     return typeof action === "object" && action !== null && "type" in action;
 }
 
-// Проверка, является ли действие PayloadAction
-function isPayloadAction<P>(action: unknown, type: string): action is PayloadAction<P> {
-    return isAction(action) && action.type === type && "payload" in action;
-}
-
 export const socketMiddleware = (wsActions: { connect: string; disconnect: string }): Middleware => {
     return (store) => {
         let socket: WebSocket | null = null;
