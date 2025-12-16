@@ -1,4 +1,4 @@
-import reducer, { addOrder, clearOrders } from "./ordersWSSlice";
+import reducer, { addOrder, clearOrders, initialState } from "./ordersWSSlice";
 import { wsOpen, wsMessage, wsError, wsClose } from "./middleware/action-types";
 import { IOrdersResponse } from "../entities/ordersWS";
 
@@ -11,11 +11,6 @@ const makeOrdersResponse = (overrides: Partial<IOrdersResponse> = {}): IOrdersRe
 });
 
 describe("ordersWSSlice reducer", () => {
-    const initialState = {
-        isConnected: false,
-        error: null as string | null,
-        orders: null as IOrdersResponse | null,
-    };
 
     it("should return the initial state", () => {
         expect(reducer(undefined, { type: "unknown" })).toEqual(initialState);

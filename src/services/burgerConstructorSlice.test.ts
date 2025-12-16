@@ -4,6 +4,7 @@ import reducer, {
     deleteBurgerConstructor,
     moveBurgerConstructor,
     clearBurgerConstructor,
+    initialState,
 } from "./burgerConstructorSlice";
 import { IIngredient, IConstructorIngredient } from "../entities/ingredient";
 
@@ -40,7 +41,7 @@ describe("burgerConstructorSlice reducer", () => {
     });
 
     it("should return the initial state", () => {
-        expect(reducer(undefined, { type: "unknown" })).toEqual({ constructorItems: [] });
+        expect(reducer(undefined, { type: "unknown" })).toEqual(initialState);
     });
 
     it("should handle addBurgerConstructor", () => {

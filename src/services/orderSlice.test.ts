@@ -1,4 +1,4 @@
-import reducer, { getOrder, setOrder, resetOrder } from "./orderSlice";
+import reducer, { getOrder, setOrder, resetOrder, initialState } from "./orderSlice";
 import { IOrder } from "../entities/ordersWS";
 
 const makeOrder = (overrides: Partial<IOrder> = {}): IOrder => ({
@@ -13,11 +13,6 @@ const makeOrder = (overrides: Partial<IOrder> = {}): IOrder => ({
 });
 
 describe("orderSlice reducer", () => {
-    const initialState = {
-        orderItems: null as IOrder | null,
-        orderItemsRequest: false,
-        orderItemsFailed: false,
-    };
 
     it("should return the initial state", () => {
         expect(reducer(undefined, { type: "unknown" })).toEqual(initialState);

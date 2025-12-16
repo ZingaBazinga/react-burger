@@ -4,6 +4,7 @@ import reducer, {
     incrementBurgerIngredients,
     decrementBurgerIngredients,
     resetBurgerIngredientsCounters,
+    initialState,
 } from "./burgerIngredientsSlice";
 import { EIngredientType, IIngredient } from "../entities/ingredient";
 
@@ -24,13 +25,6 @@ const makeIngredient = (overrides: Partial<IIngredient> = {}): IIngredient => ({
 });
 
 describe("burgerIngredientsSlice reducer", () => {
-    const initialState = {
-        burgerIngredients: [] as IIngredient[],
-        burgerIngredientsRequest: false,
-        burgerIngredientsFailed: false,
-        burgerIngredientsTab: EIngredientType.bun,
-    };
-
     it("should return the initial state", () => {
         expect(reducer(undefined, { type: "unknown" })).toEqual(initialState);
     });

@@ -11,13 +11,15 @@ export const getOrder = createAsyncThunk("orders", async (id: string, { rejectWi
     }
 });
 
+export const initialState = {
+    orderItems: null as IOrder | null,
+    orderItemsRequest: false,
+    orderItemsFailed: false,
+};
+
 const orderSlice = createSlice({
     name: "order",
-    initialState: {
-        orderItems: null as IOrder | null,
-        orderItemsRequest: false,
-        orderItemsFailed: false,
-    },
+    initialState,
     reducers: {
         setOrder: (state, action: PayloadAction<IOrder | null>) => {
             state.orderItems = action.payload;

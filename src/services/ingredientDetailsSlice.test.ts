@@ -1,4 +1,4 @@
-import reducer, { setIngredientDetails, resetIngredientDetails } from "./ingredientDetailsSlice";
+import reducer, { setIngredientDetails, resetIngredientDetails, initialState } from "./ingredientDetailsSlice";
 import { IIngredient } from "../entities/ingredient";
 
 const makeIngredient = (overrides: Partial<IIngredient> = {}): IIngredient => ({
@@ -18,7 +18,6 @@ const makeIngredient = (overrides: Partial<IIngredient> = {}): IIngredient => ({
 });
 
 describe("ingredientDetailsSlice reducer", () => {
-    const initialState = { ingredientDetails: null as IIngredient | null };
 
     it("should return the initial state", () => {
         expect(reducer(undefined, { type: "unknown" })).toEqual(initialState);

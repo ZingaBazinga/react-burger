@@ -10,6 +10,7 @@ import reducer, {
     resetAuthLogout,
     setUser,
     resetUser,
+    initialState,
 } from "./authSlice";
 import { IProfileData } from "../entities/profile";
 
@@ -20,25 +21,6 @@ const makeUser = (overrides: Partial<IProfileData> = {}): IProfileData => ({
 });
 
 describe("authSlice reducer", () => {
-    const initialState = {
-        user: null as IProfileData | null,
-        userRequest: false,
-        userFailed: false,
-        userSuccess: false,
-        authRegisterSuccess: false,
-        authRegisterRequest: false,
-        authRegisterFailed: false,
-        authLoginSuccess: false,
-        authLoginRequest: false,
-        authLoginFailed: false,
-        authTokenSuccess: false,
-        authTokenRequest: false,
-        authTokenFailed: false,
-        authLogoutSuccess: false,
-        authLogoutRequest: false,
-        authLogoutFailed: false,
-    };
-
     it("should return the initial state", () => {
         expect(reducer(undefined, { type: "unknown" })).toEqual(initialState);
     });

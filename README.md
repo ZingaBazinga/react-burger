@@ -1,48 +1,175 @@
-# Getting Started with Create React App
+# React Burger 🍔
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Веб-приложение для создания и заказа бургеров с интерактивным конструктором ингредиентов.
 
-## Available Scripts
+## 🌐 Демо
 
-In the project directory, you can run:
+- **GitHub Pages**: [https://zingabazinga.github.io/react-burger/](https://zingabazinga.github.io/react-burger/)
+- **Production**: [https://zinga-bazinga-rb.nomorepartiessbs.ru/](https://zinga-bazinga-rb.nomorepartiessbs.ru/)
 
-### `npm start`
+## 📋 Описание проекта
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+React Burger — это современное веб-приложение для создания кастомных бургеров. Пользователи могут:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Просматривать доступные ингредиенты (булки, соусы, начинки)
+- Собирать бургер с помощью drag-and-drop интерфейса
+- Оформлять заказы
+- Просматривать историю заказов в реальном времени через WebSocket
+- Регистрироваться и авторизовываться
+- Управлять профилем
 
-### `npm test`
+## 🛠 Технологии
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Основной стек
 
-### `npm run build`
+- **React 18.3** — библиотека для создания пользовательского интерфейса
+- **TypeScript** — типизированный JavaScript
+- **Redux Toolkit** — управление состоянием приложения
+- **React Router DOM 7** — маршрутизация
+- **React DnD** — drag-and-drop функциональность
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### UI библиотеки
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **@ya.praktikum/react-developer-burger-ui-components** — компоненты интерфейса от Яндекс.Практикум
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Тестирование
 
-### `npm run eject`
+- **Jest** — unit тесты
+- **React Testing Library** — тестирование React компонентов
+- **Cypress** — E2E тестирование
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Инструменты разработки
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Prettier** — форматирование кода
+- **ESLint** — линтинг кода
+- **Create React App** — сборка проекта
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 📦 Установка
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1. Клонируйте репозиторий:
 
-## Learn More
+```bash
+git clone https://github.com/zingabazinga/react-burger.git
+cd react-burger
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. Установите зависимости:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm install
+```
 
-# react-burger
+## 🚀 Запуск проекта
+
+### Режим разработки
+
+```bash
+npm start
+```
+
+Приложение откроется по адресу [http://localhost:3000](http://localhost:3000)
+
+### Сборка для production
+
+```bash
+npm run build
+```
+
+Собранные файлы будут находиться в папке `build/`
+
+### Запуск тестов
+
+```bash
+# Unit тесты
+npm test
+
+# E2E тесты (Cypress)
+npm run cypress:open
+```
+
+### Форматирование кода
+
+```bash
+npm run format
+```
+
+## 🚢 Деплой
+
+### Деплой на GitHub Pages
+
+1. Убедитесь, что проект собран:
+
+```bash
+npm run build
+```
+
+2. Задеплойте на GitHub Pages:
+
+```bash
+npm run deploy
+```
+
+Приложение будет доступно по адресу: `https://<username>.github.io/react-burger/`
+
+### Деплой на собственный сервер
+
+Для деплоя на собственный сервер используйте скрипт:
+
+```bash
+npm run deploy-script
+```
+
+**Примечание**: Убедитесь, что у вас настроен SSH доступ к серверу и указан правильный путь в скрипте.
+
+## 📁 Структура проекта
+
+```
+react-burger/
+├── public/                 # Статические файлы
+├── src/
+│   ├── components/         # React компоненты
+│   │   ├── App/            # Главный компонент приложения
+│   │   ├── BurgerConstructor/  # Конструктор бургера
+│   │   ├── BurgerIngredients/  # Список ингредиентов
+│   │   └── ...
+│   ├── entities/           # Бизнес-сущности
+│   ├── hooks/              # Кастомные хуки
+│   ├── pages/              # Страницы приложения
+│   ├── services/           # Redux слайсы и store
+│   ├── types/              # TypeScript типы
+│   └── utils/             # Утилиты
+├── cypress/                # E2E тесты Cypress
+│   ├── e2e/               # Тесты
+│   └── support/           # Кастомные команды и селекторы
+└── package.json
+```
+
+## 🧪 Тестирование
+
+Проект включает в себя:
+
+- **Unit тесты** для Redux слайсов (Jest)
+- **E2E тесты** для пользовательских сценариев (Cypress)
+
+### Запуск всех тестов
+
+```bash
+npm test
+```
+
+### Запуск Cypress тестов
+
+```bash
+npm run cypress:open
+```
+
+## 📝 Основные возможности
+
+- ✅ Конструктор бургеров с drag-and-drop
+- ✅ Регистрация и авторизация пользователей
+- ✅ Оформление заказов
+- ✅ История заказов в реальном времени (WebSocket)
+- ✅ Профиль пользователя
+- ✅ Адаптивный дизайн
+- ✅ Типизация с TypeScript
+- ✅ Покрытие тестами

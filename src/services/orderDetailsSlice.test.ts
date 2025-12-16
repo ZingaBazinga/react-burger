@@ -1,11 +1,6 @@
-import reducer, { postOrder, resetOrderDetails } from "./orderDetailsSlice";
+import reducer, { postOrder, resetOrderDetails, initialState } from "./orderDetailsSlice";
 
 describe("orderDetailsSlice reducer", () => {
-    const initialState = {
-        orderDetailsNumber: null,
-        orderDetailsNumberRequest: false,
-        orderDetailsNumberFailed: false,
-    };
 
     it("should return the initial state", () => {
         expect(reducer(undefined, { type: "unknown" })).toEqual(initialState);

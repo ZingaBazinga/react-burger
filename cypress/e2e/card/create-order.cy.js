@@ -56,14 +56,6 @@ const orderResponse = {
     },
 };
 
-const dropToConstructor = (ingredientName) => {
-    const dataTransfer = new DataTransfer();
-
-    cy.contains("[class*=BurgerIngredientCard_card]", ingredientName).trigger("dragstart", { dataTransfer });
-    cy.get("[class*=BurgerConstructor_container]").trigger("drop", { dataTransfer });
-    cy.get("[class*=BurgerConstructor_container]").trigger("dragend");
-};
-
 describe("Конструктор — пользовательский путь", () => {
     beforeEach(() => {
         cy.intercept("GET", "**/ingredients", {
@@ -76,7 +68,7 @@ describe("Конструктор — пользовательский путь",
             body: orderResponse,
         }).as("postOrder");
 
-        cy.visit("http://localhost:3000", {
+        cy.visit("/", {
             onBeforeLoad(win) {
                 win.localStorage.setItem("accessToken", "test-access");
                 win.localStorage.setItem("refreshToken", "test-refresh");
@@ -87,28 +79,23 @@ describe("Конструктор — пользовательский путь",
     });
 
     it("должен собрать бургер, оформить заказ и закрыть модалку", () => {
-        // перетащили булку, соус и начинку
-        dropToConstructor(bun.name);
-        dropToConstructor(sauce.name);
-        dropToConstructor(mainIngredient.name);
+        cy.dragIngredientToConstructor(bun.name);
+        cy.dragIngredientToConstructor(sauce.name);
+        cy.dragIngredientToConstructor(mainIngredient.name);
 
-        // проверили, что ингредиенты появились в конструкторе и кнопка активна
         cy.contains("Булка космическая (верх)").should("exist");
         cy.contains(mainIngredient.name).should("exist");
         cy.contains("button", "Оформить заказ").should("not.be.disabled").click();
 
-        // дождались заказа и проверили модалку
         cy.wait("@postOrder");
-        cy.get("#react-modals").within(() => {
+        cy.getModal().within(() => {
             cy.contains("идентификатор заказа").should("exist");
             cy.contains(orderResponse.order.number).should("exist");
         });
 
-        // закрыли модалку по клику на оверлей
-        cy.get("[class*=ModalOverlay_modal_overlay__CGcON]").click({ force: true });
-        cy.get("#react-modals").should("be.empty");
+        cy.closeModalByOverlay();
+        cy.getModal().should("be.empty");
 
-        // после заказа конструктор очищен, кнопка снова неактивна
         cy.contains("Пока пусто").should("exist");
         cy.contains("button", "Оформить заказ").should("be.disabled");
     });

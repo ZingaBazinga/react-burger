@@ -2,11 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IIngredient, IConstructorIngredient } from "../entities/ingredient";
 import { v4 as uuidv4 } from "uuid";
 
+export const initialState = {
+    constructorItems: [] as IConstructorIngredient[],
+};
+
 const burgerConstructorSlice = createSlice({
     name: "burgerConstructor",
-    initialState: {
-        constructorItems: [] as IConstructorIngredient[],
-    },
+    initialState,
     reducers: {
         addBurgerConstructor: {
             reducer: (state, action: PayloadAction<IConstructorIngredient>) => {

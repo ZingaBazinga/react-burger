@@ -4,20 +4,10 @@ import reducer, {
     resetPasswordReset,
     resetPasswordResetReset,
     resetAuthRegister,
+    initialState,
 } from "./profileSlice";
 
 describe("profileSlice reducer", () => {
-    const initialState = {
-        passwordResetSuccess: false,
-        passwordResetRequest: false,
-        passwordResetFailed: false,
-        passwordResetResetSuccess: false,
-        passwordResetResetRequest: false,
-        passwordResetResetFailed: false,
-        authRegisterSuccess: false,
-        authRegisterRequest: false,
-        authRegisterFailed: false,
-    };
 
     it("should return the initial state", () => {
         expect(reducer(undefined, { type: "unknown" })).toEqual(initialState);

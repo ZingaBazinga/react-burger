@@ -55,25 +55,21 @@ describe("Конструктор — модальное окно ингреди�
             body: ingredientsResponse,
         }).as("getIngredients");
 
-        cy.visit("http://localhost:3000");
+        cy.visit("/");
         cy.wait("@getIngredients");
     });
 
     it("должен открыть модальное окно с описанием ингредиента при клике на карточку", () => {
-        // Кликаем на карточку ингредиента
-        cy.contains("[class*=BurgerIngredientCard_card]", bun.name).click();
+        cy.clickIngredientCard(bun.name);
 
-        // Проверяем, что модальное окно открылось
-        cy.get("#react-modals").should("not.be.empty");
+        cy.getModal().should("not.be.empty");
         cy.contains("Детали ингредиента").should("exist");
     });
 
     it("должен отобразить данные ингредиента в модальном окне", () => {
-        // Кликаем на карточку ингредиента
-        cy.contains("[class*=BurgerIngredientCard_card]", sauce.name).click();
+        cy.clickIngredientCard(sauce.name);
 
-        // Проверяем отображение данных ингредиента
-        cy.get("#react-modals").within(() => {
+        cy.getModal().within(() => {
             cy.contains(sauce.name).should("exist");
             cy.contains("Калории,ккал").should("exist");
             cy.contains(sauce.calories).should("exist");
@@ -88,32 +84,16 @@ describe("Конструктор — модальное окно ингреди�
     });
 
     it("должен закрыть модальное окно при клике на кнопку закрытия", () => {
-        // Кликаем на карточку ингредиента
-        cy.contains("[class*=BurgerIngredientCard_card]", mainIngredient.name).click();
-
-        // Проверяем, что модальное окно открылось
-        cy.get("#react-modals").should("not.be.empty");
-
-        // Кликаем на кнопку закрытия
-        cy.get("#react-modals").within(() => {
-            cy.get("[class*=icon]").last().click();
-        });
-
-        // Проверяем, что модальное окно закрылось
-        cy.get("#react-modals").should("be.empty");
+        cy.clickIngredientCard(mainIngredient.name);
+        cy.getModal().as("modal").should("not.be.empty");
+        cy.closeModalByButton();
+        cy.get("@modal").should("be.empty");
     });
 
     it("должен закрыть модальное окно при клике на оверлей", () => {
-        // Кликаем на карточку ингредиента
-        cy.contains("[class*=BurgerIngredientCard_card]", bun.name).click();
-
-        // Проверяем, что модальное окно открылось
-        cy.get("#react-modals").should("not.be.empty");
-
-        // Кликаем на оверлей
-        cy.get("[class*=ModalOverlay_modal_overlay]").click({ force: true });
-
-        // Проверяем, что модальное окно закрылось
-        cy.get("#react-modals").should("be.empty");
+        cy.clickIngredientCard(bun.name);
+        cy.getModal().as("modal").should("not.be.empty");
+        cy.closeModalByOverlay();
+        cy.get("@modal").should("be.empty");
     });
 });
