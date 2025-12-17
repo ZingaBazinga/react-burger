@@ -18,8 +18,7 @@ Cypress.Commands.add("dragIngredientToConstructor", (ingredientName: string) => 
 });
 
 Cypress.Commands.add("getModal", () => {
-    cy.get(SELECTORS.modalContainer).as("modal");
-    return cy.get("@modal");
+    return cy.get(SELECTORS.modalContainer);
 });
 
 Cypress.Commands.add("closeModalByOverlay", () => {
