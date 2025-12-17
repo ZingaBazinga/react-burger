@@ -11,14 +11,16 @@ export const getBurgerIngredients = createAsyncThunk("ingredients", async (_, { 
     }
 });
 
+export const initialState = {
+    burgerIngredients: [] as IIngredient[],
+    burgerIngredientsRequest: false,
+    burgerIngredientsFailed: false,
+    burgerIngredientsTab: EIngredientType.bun,
+};
+
 const burgerIngredientsSlice = createSlice({
     name: "burgerIngredients",
-    initialState: {
-        burgerIngredients: [] as IIngredient[],
-        burgerIngredientsRequest: false,
-        burgerIngredientsFailed: false,
-        burgerIngredientsTab: EIngredientType.bun,
-    },
+    initialState,
     reducers: {
         switchBurgerIngredientsTab: (state, action) => {
             if (Object.values(EIngredientType).includes(action.payload)) {

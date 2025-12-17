@@ -16,13 +16,15 @@ export const postOrder = createAsyncThunk("orders", async (order: { ingredients:
     }
 });
 
+export const initialState = {
+    orderDetailsNumber: null as number | null,
+    orderDetailsNumberRequest: false,
+    orderDetailsNumberFailed: false,
+};
+
 const orderDetailsSlice = createSlice({
     name: "orderDetails",
-    initialState: {
-        orderDetailsNumber: null,
-        orderDetailsNumberRequest: false,
-        orderDetailsNumberFailed: false,
-    },
+    initialState,
     reducers: {
         resetOrderDetails: (state) => {
             state.orderDetailsNumber = null;

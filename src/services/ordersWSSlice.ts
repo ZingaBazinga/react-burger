@@ -9,7 +9,7 @@ interface OrdersWSState {
     orders: IOrdersResponse | null; // замените на ваш тип
 }
 
-const initialState: OrdersWSState = {
+export const initialState: OrdersWSState = {
     isConnected: false,
     error: null,
     orders: null,

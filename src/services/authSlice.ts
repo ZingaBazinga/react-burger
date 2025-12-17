@@ -96,30 +96,32 @@ export const patchAuthUser = createAsyncThunk(
     },
 );
 
+export const initialState = {
+    user: null as IProfileData | null,
+    userRequest: false,
+    userFailed: false,
+    userSuccess: false,
+    // ------------------------------------------------------------
+    authRegisterSuccess: false,
+    authRegisterRequest: false,
+    authRegisterFailed: false,
+    // ------------------------------------------------------------
+    authLoginSuccess: false,
+    authLoginRequest: false,
+    authLoginFailed: false,
+    // ------------------------------------------------------------
+    authTokenSuccess: false,
+    authTokenRequest: false,
+    authTokenFailed: false,
+    // ------------------------------------------------------------
+    authLogoutSuccess: false,
+    authLogoutRequest: false,
+    authLogoutFailed: false,
+};
+
 const authSlice = createSlice({
     name: "profile",
-    initialState: {
-        user: null as IProfileData | null,
-        userRequest: false,
-        userFailed: false,
-        userSuccess: false,
-        // ------------------------------------------------------------
-        authRegisterSuccess: false,
-        authRegisterRequest: false,
-        authRegisterFailed: false,
-        // ------------------------------------------------------------
-        authLoginSuccess: false,
-        authLoginRequest: false,
-        authLoginFailed: false,
-        // ------------------------------------------------------------
-        authTokenSuccess: false,
-        authTokenRequest: false,
-        authTokenFailed: false,
-        // ------------------------------------------------------------
-        authLogoutSuccess: false,
-        authLogoutRequest: false,
-        authLogoutFailed: false,
-    },
+    initialState,
     reducers: {
         setUser: (state, action: PayloadAction<IProfileData>) => {
             state.user = action.payload;

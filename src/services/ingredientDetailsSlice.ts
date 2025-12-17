@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IIngredient } from "../entities/ingredient";
 
+export const initialState = {
+    ingredientDetails: null as IIngredient | null,
+};
+
 const ingredientDetailsSlice = createSlice({
     name: "ingredientDetails",
-    initialState: {
-        ingredientDetails: null as IIngredient | null,
-    },
+    initialState,
     reducers: {
         setIngredientDetails: (state, action) => {
             state.ingredientDetails = action.payload;

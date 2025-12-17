@@ -2,6 +2,7 @@
     "name": "react-burger",
     "version": "0.1.0",
     "private": true,
+    "homepage": "./",
     "dependencies": {
         "@reduxjs/toolkit": "^2.9.1",
         "@testing-library/dom": "^10.4.1",
@@ -24,12 +25,15 @@
         "react-scripts": "5.0.1",
         "redux": "^5.0.1",
         "redux-thunk": "^3.1.0",
-        "typescript": "^4.9.5",
         "web-vitals": "^2.1.4"
     },
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build",
+        "cypress:open": "./node_modules/.bin/cypress open",
+        "deploy-script": "npm run build && scp -i ~/.ssh/id_ed25519_yp -r ./build/* zingabazinga@89.169.183.148:/home/zingabazinga/stellar-frontend",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "format": "npx prettier . --write"
@@ -54,6 +58,13 @@
     },
     "devDependencies": {
         "@types/uuid": "^10.0.0",
-        "prettier": "3.6.2"
+        "cypress": "^15.7.1",
+        "eslint-plugin-cypress": "^3.6.0",
+        "fetch-mock": "^12.6.0",
+        "gh-pages": "^6.3.0",
+        "prettier": "3.6.2",
+        "redux-mock-store": "^1.5.5",
+        "typescript": "^5.9.3",
+        "webpack-dev-server": "^5.1.0"
     }
 }

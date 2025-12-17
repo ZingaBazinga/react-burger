@@ -34,19 +34,21 @@ export const postPasswordResetReset = createAsyncThunk(
     },
 );
 
+export const initialState = {
+    passwordResetSuccess: false,
+    passwordResetRequest: false,
+    passwordResetFailed: false,
+    passwordResetResetSuccess: false,
+    passwordResetResetRequest: false,
+    passwordResetResetFailed: false,
+    authRegisterSuccess: false,
+    authRegisterRequest: false,
+    authRegisterFailed: false,
+};
+
 const profileSlice = createSlice({
     name: "profile",
-    initialState: {
-        passwordResetSuccess: false,
-        passwordResetRequest: false,
-        passwordResetFailed: false,
-        passwordResetResetSuccess: false,
-        passwordResetResetRequest: false,
-        passwordResetResetFailed: false,
-        authRegisterSuccess: false,
-        authRegisterRequest: false,
-        authRegisterFailed: false,
-    },
+    initialState,
     reducers: {
         resetPasswordReset: (state) => {
             state.passwordResetSuccess = false;
